@@ -28,8 +28,9 @@ public class MainController {
 
         JSONObject obj = new JSONObject();
 
-        obj.put("name", "foo");
-        obj.put("addr", "bar");
+        obj.put("name", user.getName());
+        obj.put("password", user.getPassword());
+        obj.put("email", user.getEmail());
 
         return obj.toJSONString();
     }

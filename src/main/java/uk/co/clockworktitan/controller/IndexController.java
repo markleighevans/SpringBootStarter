@@ -12,10 +12,15 @@ public class IndexController {
 
     @GetMapping("/")
     public String index() {
-        return "tinker";
+        return "home";
     }
     @GetMapping("/BS")
     public String BS() {
         return "Bootstrap";
+    }
+
+    @GetMapping("/viewall")
+    public String viewall() {
+        return "viewall";
     }
 }

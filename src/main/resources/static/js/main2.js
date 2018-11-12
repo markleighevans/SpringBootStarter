@@ -7,16 +7,18 @@ $(document).ready(function () {
        //
     });
 
-  $("#post-button").click(function (event) {
-        //stop submit the form, we will post it manually.
-       alert("Post button clicked");
-       //fire_post_submit();
+  $("#clear-button").click(function (event) {
+        //Clear form content.
+      alert("clear button pressed");
+       $("#name").val("");
+        $("#password").val("");
+        $("#email").val("");
     });
 
 
   $("#ajax-button").click(function (event) {
         //stop submit the form, we will post it manually.
-       alert("Ajax button clicked");
+       //alert("Ajax button clicked");
        fire_ajax_submit();
     });
 
@@ -36,9 +38,9 @@ $(document).ready(function () {
     			url : "/demo/add",
     			data : JSON.stringify(formData),
     			dataType : 'json',
-    			success : function(result) {
-    				console.log("AJAX Success");
-
+    			success : function(data, status, jqXHR) {
+    			   $("#header ul").append('<li>'+ JSON.stringify(data) + '</li>');
+    				//alert("Successfully posted"+ data);
     			},
     			error: function (xhr, ajaxOptions, thrownError) {
                         alert(xhr.status);

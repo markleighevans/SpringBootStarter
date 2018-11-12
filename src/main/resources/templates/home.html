@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Spring Boot ajax example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+    <script src="/webjars/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/main2.js"></script>
+
+</head>
+<header>
+    <!-- Navbar  -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <img src="images/logo.png" class="img-responsive" alt="logo"></img>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a href="/viewall"><font size="4">Show all</font></a>
+                </li>
+                <li class="active">
+                    <a href="/"><font size="4">Add</font></a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/login.html">
+                        <font size="4"><span class="glyphicon glyphicon-log-in"></span>  Login!</font>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- /Navbar -->
+</header>
+
+<body>
+
+<div class="container" style="min-height: 500px">
+
+    <div class="starter-template">
+        <h1>Spring Boot AJAX Example</h1>
+
+        <div id="feedback"></div>
+
+
+        <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label">Username</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="name" value="Woody"/>
+            </div>
+            <label class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="password" value="Secret"/>
+            </div>
+            <label class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="email" value="woody@toystory.com"/>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+
+                <button id="clear-button">Clear</button>
+                <button id="ajax-button">Save</button>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+<div id="header">
+    <ul>
+        <li><a href="https://www.w3resource.com/python/python-tutorial.php">Python</a></li>
+        <li><a href="https://www.w3resource.com/php/php-home.php">PHP</a></li>
+    </ul>
+</div>
+<div class="container">
+    <footer>
+        <p>
+            © <a href="http://www.ClockworkTitan.co.uk">ClockworkTitan.co.uk</a> 2017
+        </p>
+    </footer>
+</div>
+
+
+
+</body>
+</html>

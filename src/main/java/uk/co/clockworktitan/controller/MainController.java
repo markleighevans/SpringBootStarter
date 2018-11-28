@@ -60,4 +60,11 @@ public class MainController {
         System.out.println("Query Paramter:" + num1);
         return userRepository.findOne(num1);
     }
+
+    @GetMapping(path="/DeletebyID/{UserID}")
+    public @ResponseBody void DeleteSingleUser(@PathVariable(value="UserID") int num2 ) {
+        // This returns a JSON or XML with a single user
+       // System.out.println("Query Paramter:" + num1);
+         userRepository.delete(num2);
+    }
 }

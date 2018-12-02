@@ -114,8 +114,7 @@ $(document).ready( function () {
 
 $('#btnAdd').click ( function()
     {
-    $('#m_record-id').hide();
-     $("#myModal").prop("readonly", true);
+     $("#myModal").modal('show');
 
     }
 );

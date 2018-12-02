@@ -6,23 +6,16 @@ $(document).ready( function () {
 			"order": [[ 0, "asc" ]],
 			 select: true,
 			buttons: [
-                        {
-                            text: 'Row selected data',
-                            action: function ( e, dt, node, config ) {
-                                alert(
-                                    'Row data: '+
-                                    JSON.stringify( dt.row( { selected: true } ).data() )
-                                );
-                            },
-                            enabled: true
-                        },
-                        {
-                            text: 'Count rows selected',
-                            action: function ( e, dt, node, config ) {
-                                alert( 'Rows: '+ dt.rows( { selected: true } ).count() );
-                            },
-                            enabled: true
-                        }
+
+                                {
+                                    extend: 'selected',
+                                    action: function ( e, dt, node, config ) {
+                                        var rows = dt.rows( { selected: true } ).count();
+
+                                        alert( 'There are '+rows+'(s) selected in the table' );
+                                    }
+                                }
+
                     ],
 			"aoColumns": [
 			        { "mData": "id"},
@@ -42,22 +35,14 @@ $(document).ready( function () {
 	 })
 
 
+$('#employeesTable').on( 'click', 'tbody tr', function () {
+    if ( table.row( this, { selected: true } ).any() ) {
+        table.row( this ).deselect();
+    }
+    else {
+        table.row( this ).select();
+    }
+} );
 
-    $('#employeesTable tbody').on( 'click', 'tr', function (){
-         $(this).toggleClass('selected');
-     } );
-
- $('#btn').click( function () {
-       alert(table.cell('.selected',1).data());
-        //console.log(table.rows('.selected').data());
-        //alert("Check the console for selected data");
-    } );
-
-table.on( 'select deselect', function () {
-        var selectedRows = table.rows( { selected: true } ).count();
-
-        table.button( 0 ).enable( selectedRows === 1 );
-        table.button( 1 ).enable( selectedRows > 0 );
-    } );
 
 } );

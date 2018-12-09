@@ -23,4 +23,13 @@ public class IndexController {
     public String viewall() {
         return "viewall";
     }
+
+    @GetMapping("/IncomeType")
+    public String IncomeType() {
+        return "IncomeType";
+    }
+
+
+    @GetMapping("/Income")
+    public String Income() {return "Income";}
 }

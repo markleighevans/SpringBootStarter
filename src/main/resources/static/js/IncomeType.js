@@ -4,31 +4,32 @@
      {
 
       EditBtnID= EditHandler.caller.arguments[0].target.id;
-      EditTargetUserID = EditBtnID.slice(3,EditBtnID.length);
-      alert(EditTargetUserID);
-      EditModal (EditTargetUserID);
+      EditTargetIncomeTypeID = EditBtnID.slice(3,EditBtnID.length);
+      //alert(EditTargetIncomeTypeID);
+      EditModal (EditTargetIncomeTypeID);
      }
 
      function DeleteHandler()
      {
       DeleteBtnID= DeleteHandler.caller.arguments[0].target.id;
-      DeleteTargetUserID = DeleteBtnID.slice(3,DeleteBtnID.length)
-      alert(DeleteTargetUserID);
-      $.get('/demo/DeletebyID/' + DeleteTargetUserID, function()
+      DeleteTargetIncomeTypeID = DeleteBtnID.slice(3,DeleteBtnID.length)
+      //alert(DeleteTargetIncomeTypeID);
+      $.get('/IncomeType/DeletebyID/' + DeleteTargetIncomeTypeID, function()
       {
          TableRefresh(true);
       }
       )
 
      }
-function EditModal(UserID) {
+function EditModal(IncomeTypeID) {
 
-         $.getJSON( '/demo/FindbyID/' +UserID , function(UserData)
+         $.getJSON( '/IncomeType/FindbyID/' +IncomeTypeID , function(IncomeTypeData)
                        {
-                           $('#m_record-id').val(UserData.id);
-                           $('#m_name').val(UserData.name);
-                           $('#m_password').val(UserData.password);
-                           $('#m_email').val(UserData.email);
+                           $('#m_record-id').val(IncomeTypeData.id);
+                           $('#m_name').val(IncomeTypeData.incomeTypeName);
+                           $('#m_weighting').val(IncomeTypeData.incomeTypeWeighting);
+                           $('#m_indexLinked').attr('checked', IncomeTypeData.indexLinked);
+
                            $("#myModal").modal('show');
                        });
        };
@@ -37,7 +38,7 @@ function EditModal(UserID) {
 
 function TableRefresh(resetpaging )
 {
-       $('#employeesTable').DataTable().ajax.reload(null, resetpaging);
+       $('#IncomeTypeTable').DataTable().ajax.reload(null, resetpaging);
           console.log("table refresh")
 }
 
@@ -46,16 +47,16 @@ function fire_ajax_submit(){
         	// PREPARE FORM DATA
         	var formData = {
         		id : $("#m_record-id").val(),
-        		name : $("#m_name").val(),
-        		password :  $("#m_password").val(),
-        		email:  $("#m_email").val()
+        		incomeTypeName : $("#m_name").val(),
+        		incomeTypeWeighting:  $("#m_weighting").val(),
+        		indexLinked: $("#m_indexLinked").is(':checked')
         	}
 
         	// DO POST
         	$.ajax({
     			type : "POST",
     			contentType : "application/json",
-    			url : "/demo/add",
+    			url : "/IncomeType/add",
     			data : JSON.stringify(formData),
     			dataType : 'json',
     			success : function(data, status, jqXHR) {
@@ -75,17 +76,26 @@ $(document).ready( function () {
 
 
 
-	 var table = $('#employeesTable').DataTable({
+	 var table = $('#IncomeTypeTable').DataTable({
             ajax: {
                     type : 'GET',
-                                          url: 'demo/all',
+                                          url: 'IncomeType/all',
                                           dataSrc: ''},
 			"order": [[ 0, "asc" ]],
 			"aoColumns": [
-			        { "mData": "id", "bVisible": false},
-		            { "mData": "name" },
-				    { "mData": "password" },
-				    { "mData": "email" },
+			        { "mData": "id"},
+		            { "mData": "incomeTypeName" },
+				    { "mData": "incomeTypeWeighting" },
+				    {
+                        "data": null,
+                       'render': function (data){
+                        if (data.indexLinked ) {
+                                           return '<input type=\"checkbox\" disabled checked value="' + data.indexLinked + '">';
+                          } else {
+                                           return '<input type=\"checkbox\" disabled value="' + data.indexLinked + '"/>';
+                                       }
+                       }}
+                     ,
 				    {   "data": null,
                                    "render": function(data) {
 
@@ -109,6 +119,12 @@ $(document).ready( function () {
 
 $('#btnAdd').click ( function()
     {
+     $('#m_record-id').val("");
+     $('#m_name').val("");
+     $('#m_weighting').val("");
+     $('#m_weighting').val("");
+     $('#m_indexLinked').attr('checked', true);
+
      $("#myModal").modal('show');
 
     }

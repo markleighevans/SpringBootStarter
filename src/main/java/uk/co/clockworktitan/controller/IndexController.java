@@ -32,4 +32,11 @@ public class IndexController {
 
     @GetMapping("/Income")
     public String Income() {return "Income";}
+
+    @GetMapping("/Outgoings")
+    public String Outgoings() {return "Outgoings";}
+
+    @GetMapping("/OutgoingsType")
+    public String OutgoingsType() {return "OutgoingsType";}
+
 }

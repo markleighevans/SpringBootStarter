@@ -19,33 +19,33 @@
      {
 
       EditBtnID= EditHandler.caller.arguments[0].target.id;
-      EditTargetIncomeID = EditBtnID.slice(3,EditBtnID.length);
-      //alert(EditTargetIncomeID);
-      EditModal (EditTargetIncomeID);
+      EditTargetOutgoingsID = EditBtnID.slice(3,EditBtnID.length);
+      //alert(EditTargetOutgoingsID);
+      EditModal (EditTargetOutgoingsID);
      }
 
      function DeleteHandler()
      {
       DeleteBtnID= DeleteHandler.caller.arguments[0].target.id;
-      DeleteTargetIncomeID = DeleteBtnID.slice(3,DeleteBtnID.length)
-      //alert(DeleteTargetIncomeID);
-      $.get('/Income/DeletebyID/' + DeleteTargetIncomeID, function()
+      DeleteTargetOutgoingsID = DeleteBtnID.slice(3,DeleteBtnID.length)
+      //alert(DeleteTargetOutgoingsID);
+      $.get('/Outgoings/DeletebyID/' + DeleteTargetOutgoingsID, function()
       {
          TableRefresh(true);
       }
       )
 
      }
-function EditModal(IncomeID) {
+function EditModal(OutgoingsID) {
 
-         $.getJSON( '/Income/FindbyID/' +IncomeID , function(IncomeData)
+         $.getJSON( '/Outgoings/FindbyID/' +OutgoingsID , function(OutgoingsData)
                        {
-                          $('#m_record-id').val(IncomeData.id);
-                          $('#m_incomeDescription').val(IncomeData.incomeDescription);
-                          $('#m_fromDate').val(convertJSONtoDate(IncomeData.fromDate));
-                          $('#m_toDate').val(convertJSONtoDate(IncomeData.toDate));
-                          $('#m_amount').val(IncomeData.amount);
-                          $('#m_IncomeType').prop('selectedIndex', IncomeData.incomeTypeId);
+                          $('#m_record-id').val(OutgoingsData.id);
+                          $('#m_OutgoingsDescription').val(OutgoingsData.outgoingsDescription);
+                          $('#m_fromDate').val(convertJSONtoDate(OutgoingsData.fromDate));
+                          $('#m_toDate').val(convertJSONtoDate(OutgoingsData.toDate));
+                          $('#m_amount').val(OutgoingsData.amount);
+                          $('#m_OutgoingsType').prop('selectedIndex', OutgoingsData.outgoingsTypeId);
                            $("#myModal").modal('show');
                        });
        };
@@ -54,7 +54,7 @@ function EditModal(IncomeID) {
 
 function TableRefresh(resetpaging )
 {
-       $('#IncomeTable').DataTable().ajax.reload(null, resetpaging);
+       $('#OutgoingsTable').DataTable().ajax.reload(null, resetpaging);
           console.log("table refresh")
 }
 
@@ -62,8 +62,8 @@ function fire_ajax_submit(){
         	// PREPARE FORM DATA
         	var formData = {
         		id : $("#m_record-id").val(),
-        		incomeTypeId : $("#m_IncomeType").prop('selectedIndex'),
-        		incomeDescription:  $("#m_incomeDescription").val(),
+        		outgoingsTypeId : $("#m_OutgoingsType").prop('selectedIndex'),
+        		outgoingsDescription:  $("#m_OutgoingsDescription").val(),
         		fromDate:   convertToJSONDate($("#m_fromDate").val()),
         		toDate:     convertToJSONDate($("#m_toDate").val()),
         		amount:     $("#m_amount").val()
@@ -75,7 +75,7 @@ function fire_ajax_submit(){
         	$.ajax({
     			type : "POST",
     			contentType : "application/json",
-    			url : "/Income/add",
+    			url : "/Outgoings/add",
     			data : JSON.stringify(formData),
     			dataType : 'json',
     			success : function(data, status, jqXHR) {
@@ -104,7 +104,7 @@ $('#m_toDate').datepicker({
                                 changeYear: true
                               });
 
-var IncomeTypeList = [];
+var OutgoingsTypeList = [];
 var helpers =
 {
     buildDropdown: function(result, dropdown, emptyMessage)
@@ -118,58 +118,58 @@ var helpers =
         {
             // Loop through each of the results and append the option to the dropdown
             $.each(result, function(k, v) {
-                dropdown.append('<option value="' + v.id + '">' + v.incomeTypeName + '</option>');
-                //console.log(v.id + "~" + v.incomeTypeName)
-                IncomeTypeList.push( [v.id, v.incomeTypeName]  );
+                dropdown.append('<option value="' + v.id + '">' + v.outgoingsTypeName + '</option>');
+                //console.log(v.id + "~" + v.outgoingsTypeName)
+                OutgoingsTypeList.push( [v.id, v.outgoingsTypeName]  );
             });
         }
     }
 }
-// Get the list of Income Types
+// Get the list of Outgoings Types
 	 $.ajax({
                  type: "GET",
-                 url: "/IncomeType/all",
+                 url: "/OutgoingsType/all",
                  success: function(data)
                  {
                     // console.log(JSON.parse(data));
                      helpers.buildDropdown(
                         data,
-                        $('#m_IncomeType'),
+                        $('#m_OutgoingsType'),
                          'Select an option'
                      );
                  }
              });
 
 
-	 var table = $('#IncomeTable').DataTable({
+	 var table = $('#OutgoingsTable').DataTable({
             ajax: {
                     type : 'GET',
-                                          url: 'Income/all',
+                                          url: 'Outgoings/all',
                                           dataSrc: ''},
 			"order": [[ 0, "asc" ]],
 			"aoColumns": [
 			        { "mData": "id"},
-		            {///////////////////// determine th IncomeType Label
+		            {///////////////////// determine th OutgoingsType Label
 		            "data": null,
                           "render": function(data)
                             {
-                                var IncomeTypeLabel = '';
-                                if ((data.incomeTypeId != null))
+                                var OutgoingsTypeLabel = '';
+                                if ((data.outgoingsTypeId != null))
                                 {
-                                   for (var i=0, len=IncomeTypeList.length; i<len; i++)
+                                   for (var i=0, len=OutgoingsTypeList.length; i<len; i++)
                                         {
-                                            if (data.incomeTypeId == IncomeTypeList[i][0])
+                                            if (data.outgoingsTypeId == OutgoingsTypeList[i][0])
                                             {
-                                                IncomeTypeLabel = IncomeTypeList[i][1];
+                                                OutgoingsTypeLabel = OutgoingsTypeList[i][1];
                                             }
 
                                         }
-                                    return (data.incomeTypeId + ' ~ '+ IncomeTypeLabel )
+                                    return (data.outgoingsTypeId + ' ~ '+ OutgoingsTypeLabel )
                                 };
 
 		                    }
 		            },
-				    { "mData": "incomeDescription" },
+				    { "mData": "outgoingsDescription" },
 				    { "data": null,
                       				        "render": function(data) {
                       				                 var LongDate = new Date(data.fromDate);
@@ -206,8 +206,8 @@ $('#btnAdd').click ( function()
     {
     // Clear the existing data then show the modal
      $('#m_record-id').val("");
-     $('#m_incomeTypeId').val("");
-     $('#m_incomeDescription').val("");
+     $('#m_OutgoingsTypeId').val("");
+     $('#m_OutgoingsDescription').val("");
      $('#m_fromDate').val("");
      $('#m_toDate').val("");
      $('#m_amount').val("");

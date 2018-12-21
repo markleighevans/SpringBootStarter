@@ -11,14 +11,16 @@ public class Outgoings {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
+    private Integer AffordabilityCaseID;
     private Integer OutgoingsTypeId;
     private String  OutgoingsDescription;
     private Date FromDate;
     private Date ToDate;
     private Double Amount;
 
-    public Outgoings(Integer OutgoingsTypeId, String  OutgoingsDescription, Date FromDate, Date ToDate, Double Amount) {
+    public Outgoings(Integer OutgoingsTypeId, Integer AffordabilityCaseID, String  OutgoingsDescription, Date FromDate, Date ToDate, Double Amount) {
         this.OutgoingsTypeId = OutgoingsTypeId;
+        this.AffordabilityCaseID = AffordabilityCaseID;
         this.OutgoingsDescription = OutgoingsDescription;
         this.FromDate = FromDate;
         this.ToDate = ToDate;
@@ -34,6 +36,7 @@ public class Outgoings {
         return "Outgoings{" +
                 "id='" + id + '\'' +
                 ", OutgoingsTypeId='" + OutgoingsTypeId + '\'' +
+                ", AffordabilityCaseID='" + AffordabilityCaseID + '\'' +
                 ", OutgoingsDescription='" + OutgoingsDescription + '\'' +
                 ", FromDate='" + FromDate + '\'' +
                 ", ToDate='" + ToDate + '\'' +
@@ -56,6 +59,14 @@ public class Outgoings {
     public void setOutgoingsTypeId(Integer OutgoingsTypeId ) {
         this.OutgoingsTypeId = OutgoingsTypeId;
     }
+
+    public Integer getAffordabilityCaseID() {
+        return AffordabilityCaseID;
+    }
+    public void setAffordabilityCaseID(Integer AffordabilityCaseID ) {
+        this.AffordabilityCaseID = AffordabilityCaseID;
+    }
+
 
     public String getOutgoingsDescription() {
         return OutgoingsDescription;

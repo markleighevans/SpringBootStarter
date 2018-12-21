@@ -32,6 +32,7 @@ public class OutgoingsController {
         {System.out.println("Blank System ID "); }
 
         n.setOutgoingsTypeId(Outgoings.getOutgoingsTypeId());
+        n.setAffordabilityCaseID(Outgoings.getAffordabilityCaseID());
         n.setOutgoingsDescription(Outgoings.getOutgoingsDescription());
         n.setFromDate(Outgoings.getFromDate());
         n.setToDate(Outgoings.getToDate());

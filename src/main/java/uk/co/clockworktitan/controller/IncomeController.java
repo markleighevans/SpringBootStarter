@@ -30,9 +30,10 @@ public class IncomeController {
         else
             // no ID passed, so must be a new record
         {System.out.println("Blank System ID "); }
-
+        n.setAffordabilityCaseID(Income.getAffordabilityCaseID());
         n.setIncomeTypeId(Income.getIncomeTypeId());
         n.setIncomeDescription(Income.getIncomeDescription());
+        n.setStressOutcome(Income.getStressOutcome());
         n.setFromDate(Income.getFromDate());
         n.setToDate(Income.getToDate());
         n.setAmount(Income.getAmount());
@@ -57,6 +58,14 @@ public class IncomeController {
         // This returns a JSON or XML with a single user
         System.out.println("Query Paramter:" + num1);
         return IncomeRepository.findOne(num1);
+    }
+
+    @GetMapping(path="/FindbyAffordabilityCaseID/{AffordabilityCaseID}")
+    public @ResponseBody Iterable <Income> getAllIncomebyAffordabilityCaseID (@PathVariable(value="AffordabilityCaseID") int num1 ) {
+        // This returns all Income records for a given AffordabilityCaseID
+        System.out.println("Query Paramter:" + num1);
+        //return IncomeRepository.findByAffordabilityCaseID(num1);
+        return IncomeRepository.findAllByAffordabilityCaseID(num1);
     }
 
     @GetMapping(path="/DeletebyID/{UserID}")

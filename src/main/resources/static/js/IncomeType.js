@@ -27,6 +27,7 @@ function EditModal(IncomeTypeID) {
                        {
                            $('#m_record-id').val(IncomeTypeData.id);
                            $('#m_name').val(IncomeTypeData.incomeTypeName);
+                            $('#m_stressOutcome').val(IncomeTypeData.stressOutcome);
                            $('#m_weighting').val(IncomeTypeData.incomeTypeWeighting);
                            $('#m_indexLinked').attr('checked', IncomeTypeData.indexLinked);
 
@@ -48,6 +49,7 @@ function fire_ajax_submit(){
         	var formData = {
         		id : $("#m_record-id").val(),
         		incomeTypeName : $("#m_name").val(),
+        		stressOutcome : $("#m_stressOutcome").val(),
         		incomeTypeWeighting:  $("#m_weighting").val(),
         		indexLinked: $("#m_indexLinked").is(':checked')
         	}
@@ -85,6 +87,7 @@ $(document).ready( function () {
 			"aoColumns": [
 			        { "mData": "id"},
 		            { "mData": "incomeTypeName" },
+		            { "mData": "stressOutcome" },
 				    { "mData": "incomeTypeWeighting" },
 				    {
                         "data": null,
@@ -122,7 +125,7 @@ $('#btnAdd').click ( function()
      $('#m_record-id').val("");
      $('#m_name').val("");
      $('#m_weighting').val("");
-     $('#m_weighting').val("");
+     $('#m_stressOutcome').val("");
      $('#m_indexLinked').attr('checked', true);
 
      $("#myModal").modal('show');

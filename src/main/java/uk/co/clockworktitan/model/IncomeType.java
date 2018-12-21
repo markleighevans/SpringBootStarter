@@ -12,11 +12,13 @@ public class IncomeType {
     private Integer id;
     private String IncomeTypeName;
     private Integer IncomeTypeWeighting;
+    private Integer StressOutcome;
     private Boolean IndexLinked;
 
-    public IncomeType(String IncomeTypeName, Integer IncomeTypeWeighting, Boolean IndexLinked) {
+    public IncomeType(String IncomeTypeName, Integer IncomeTypeWeighting, Integer StressOutcome, Boolean IndexLinked) {
         this.IncomeTypeName = IncomeTypeName;
         this.IncomeTypeWeighting = IncomeTypeWeighting;
+        this.StressOutcome = StressOutcome;
         this.IndexLinked = IndexLinked;
     }
 
@@ -29,6 +31,7 @@ public class IncomeType {
         return "IncomeType{" +
                 "name='" + IncomeTypeName + '\'' +
                 ", Weighting='" + IncomeTypeWeighting + '\'' +
+                ", StressOutcome='" + StressOutcome + '\'' +
                 ", IndexLinked='" + IndexLinked + '\'' +
                 '}';
     }
@@ -63,6 +66,13 @@ public class IncomeType {
         this.IncomeTypeWeighting = IncomeTypeWeighting;
     }
 
+    public Integer getStressOutcome() {
+        return StressOutcome;
+    }
+
+    public void setStressOutcome(Integer StressOutcome) {
+        this.StressOutcome = StressOutcome;
+    }
 
 
 }

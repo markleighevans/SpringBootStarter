@@ -11,15 +11,19 @@ public class Income {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
+    private Integer AffordabilityCaseID;
     private Integer IncomeTypeId;
     private String  IncomeDescription;
+    private Integer StressOutcome;
     private Date FromDate;
     private Date ToDate;
     private Double Amount;
 
-    public Income(Integer IncomeTypeId,String  IncomeDescription, Date FromDate, Date ToDate, Double Amount) {
+    public Income(Integer IncomeTypeId, Integer AffordabilityCaseID, String  IncomeDescription, Integer StressOutcome,  Date FromDate, Date ToDate, Double Amount) {
         this.IncomeTypeId = IncomeTypeId;
+        this.AffordabilityCaseID = AffordabilityCaseID;
         this.IncomeDescription = IncomeDescription;
+        this.StressOutcome = StressOutcome;
         this.FromDate = FromDate;
         this.ToDate = ToDate;
         this.Amount = Amount;
@@ -33,8 +37,10 @@ public class Income {
     public String toString() {
         return "Income{" +
                 "id='" + id + '\'' +
+                "AffordabilityCaseID='" + AffordabilityCaseID + '\'' +
                 ", IncomeTypeId='" + IncomeTypeId + '\'' +
                 ", IncomeDescription='" + IncomeDescription + '\'' +
+                ", StressOutcome='" + StressOutcome + '\'' +
                 ", FromDate='" + FromDate + '\'' +
                 ", ToDate='" + ToDate + '\'' +
                 ", Amount='" + Amount + '\'' +
@@ -50,6 +56,13 @@ public class Income {
         this.id = id;
     }
 
+    public Integer getAffordabilityCaseID() {
+        return AffordabilityCaseID;
+    }
+    public void setAffordabilityCaseID(Integer AffordabilityCaseID ) {
+        this.AffordabilityCaseID = AffordabilityCaseID;
+    }
+
     public Integer getIncomeTypeId() {
         return IncomeTypeId;
     }
@@ -63,6 +76,14 @@ public class Income {
     public void setIncomeDescription(String IncomeDescription) {
         this.IncomeDescription = IncomeDescription;
     }
+
+    public Integer getStressOutcome() {
+        return StressOutcome;
+    }
+    public void setStressOutcome(Integer StressOutcome ) {
+        this.StressOutcome = StressOutcome;
+    }
+
 
     public Date getFromDate() {
         return FromDate;

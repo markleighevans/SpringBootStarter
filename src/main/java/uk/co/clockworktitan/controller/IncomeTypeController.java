@@ -34,6 +34,7 @@ public class IncomeTypeController {
         n.setIncomeTypeName(incometype.getIncomeTypeName());
         n.setIncomeTypeWeighting(incometype.getIncomeTypeWeighting());
         n.setIndexLinked(incometype.getIndexLinked());
+        n.setStressOutcome(incometype.getStressOutcome());
         incometypeRepository.save(n);
 
         JSONObject obj = new JSONObject();

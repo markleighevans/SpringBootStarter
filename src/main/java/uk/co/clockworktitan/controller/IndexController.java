@@ -39,4 +39,10 @@ public class IndexController {
     @GetMapping("/OutgoingsType")
     public String OutgoingsType() {return "OutgoingsType";}
 
+    @GetMapping("/AffordabilityCase")
+    public String AffordabilityCase() {return "AffordabilityCase";}
+
+    @GetMapping("/QuoteSummary")
+    public String QuoteSummary() {return "QuoteSummary";}
+
 }

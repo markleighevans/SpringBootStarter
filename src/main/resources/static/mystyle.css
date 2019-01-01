@@ -1,0 +1,31 @@
+.dataTable {
+    width: 100% !important;
+    margin: 0;
+}
+
+.dataTables_wrapper {
+    position: relative;
+}
+
+.dataTables_scrollHeadInner {
+    width: 100% !important;
+}
+
+
+
+.container {
+    position: relative;
+    width: 70%;
+    border: 1px solid #f0f;
+}
+
+.container .grid {
+    position: relative;
+    overflow-x: hidden;
+}
+
+table { table-layout: fixed; }
+td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+ }

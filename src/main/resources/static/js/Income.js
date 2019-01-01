@@ -42,6 +42,7 @@ function EditModal(IncomeID) {
                        {
                           $('#m_record-id').val(IncomeData.id);
                           $('#m_incomeDescription').val(IncomeData.incomeDescription);
+                          $('#m_stressOutcome').val(IncomeData.stressOutcome);
                           $('#m_fromDate').val(convertJSONtoDate(IncomeData.fromDate));
                           $('#m_toDate').val(convertJSONtoDate(IncomeData.toDate));
                           $('#m_amount').val(IncomeData.amount);
@@ -64,6 +65,7 @@ function fire_ajax_submit(){
         		id : $("#m_record-id").val(),
         		incomeTypeId : $("#m_IncomeType").prop('selectedIndex'),
         		incomeDescription:  $("#m_incomeDescription").val(),
+        		stressOutcome: $("#m_stressOutcome").val(),
         		fromDate:   convertToJSONDate($("#m_fromDate").val()),
         		toDate:     convertToJSONDate($("#m_toDate").val()),
         		amount:     $("#m_amount").val()
@@ -119,8 +121,7 @@ var helpers =
             // Loop through each of the results and append the option to the dropdown
             $.each(result, function(k, v) {
                 dropdown.append('<option value="' + v.id + '">' + v.incomeTypeName + '</option>');
-                //console.log(v.id + "~" + v.incomeTypeName)
-                IncomeTypeList.push( [v.id, v.incomeTypeName]  );
+                IncomeTypeList.push( [v.id, v.incomeTypeName, v.stressOutcome]  );
             });
         }
     }
@@ -170,6 +171,7 @@ var helpers =
 		                    }
 		            },
 				    { "mData": "incomeDescription" },
+				    { "mData": "stressOutcome" },
 				    { "data": null,
                       				        "render": function(data) {
                       				                 var LongDate = new Date(data.fromDate);
@@ -197,6 +199,23 @@ var helpers =
 	 })
 
 
+      //// update the stress outcome if the Income Type Changes
+	 $('#m_IncomeType').on('change', function() {
+      var NewIncomeTypeID = $("#m_IncomeType").prop('selectedIndex');
+      console.log('m_IncomeType Change, NewIncomeTypeID=' + NewIncomeTypeID)
+      for (var i=0, len=IncomeTypeList.length; i<len; i++)
+                                              {
+                                                  if (NewIncomeTypeID == IncomeTypeList[i][0])
+                                                  {
+                                                      StressOutcomeValue = IncomeTypeList[i][2];
+                                                  }
+
+                                              }
+        $('#m_stressOutcome').val(StressOutcomeValue);
+
+     });
+
+
  $('#ModalSave').click( function () {
         fire_ajax_submit();
     } );
@@ -208,6 +227,7 @@ $('#btnAdd').click ( function()
      $('#m_record-id').val("");
      $('#m_incomeTypeId').val("");
      $('#m_incomeDescription').val("");
+     $('#m_stressOutcome').val("");
      $('#m_fromDate').val("");
      $('#m_toDate').val("");
      $('#m_amount').val("");

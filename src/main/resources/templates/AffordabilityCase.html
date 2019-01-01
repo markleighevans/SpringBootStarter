@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+>
+<head>
+    <meta charset="utf-8"/>
+    <title>Bootstrap and Spring Boot Demo</title>
+
+    <title>Bootstrap and Spring Boot Demo</title>
+
+
+    <!-- Core Stylesheets -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/select/1.2.6/css/select.bootstrap4.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet"/>
+
+
+    <!-- Core Libraries -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Extended Libraries  -->
+
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.4/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.4/js/buttons.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/select/1.2.6/js/dataTables.select.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+
+    <!-- Custom Libraries  -->
+
+    <script src="/js/AffordabilityCase.js"></script>
+    <link rel="stylesheet" type="text/css" href="mystyle.css"/>
+
+
+</head>
+<header>
+    <!-- Navbar  -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <img src="/images/logo.png" class="img-responsive" alt="logo"></img>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a href="/viewall"><font size="4">Show all</font></a>
+                </li>
+                <li class="active">
+                    <a href="/"><font size="4">Add</font></a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/login.html">
+                        <font size="4"><span class="glyphicon glyphicon-log-in"></span> Login!</font>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- /Navbar -->
+</header>
+
+<body>
+<div class="col-sm-1">.col-sm-1</div>
+<div class="col-sm-10">
+    <div class="main-body col-sm-10">
+        <button id="btnCaseAdd" type="button" class="btn btn-outline-primary"><span class="glyphicon glyphicon-plus"></span>
+        </button>
+
+        <div class="row">
+            <label class="col-sm-2 control-label">Case ID</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="m_affordability_record-id" readonly="true" value=""/>
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-sm-2 control-label"> Case Description</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="m_Case_Description" readonly="true"  value="0"/>
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-sm-2 control-label"> Number of Applicants</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="m_Applicant_Count" readonly="true" value="0"/>
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-sm-2 control-label"> From Date</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="m_CaseFromDate" readonly="true" value="0"/>
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-sm-2 control-label"> To Date</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="m_CaseToDate" readonly="true" value="0"/>
+            </div>
+        </div>
+        <br/>
+        <div class="row"></div>
+        <button id="btnIncome" type="button" class="btn btn-outline-primary">Income <span
+                class="glyphicon glyphicon-plus"></span>
+        </button>
+        <button id="btnOutgoings" type="button" class="btn btn-outline-primary">Outgoings <span
+                class="glyphicon glyphicon-minus"></span>
+        </button>
+        <button id="btnAffordability" type="button" class="btn btn-outline-primary">Projection <span
+                class="glyphicon glyphicon-dashboard"></span>
+        </button>
+        <div class="row">
+            </div>
+
+        <div class="main-body col-sm-10 border border-primary" id="IncomeDiv">
+            <br/>
+            <button id="btnIncomeAdd" type="button" class="btn btn-outline-primary"><span
+                    class="glyphicon glyphicon-plus"></span>
+                Add Income
+            </button>
+            <br/>
+            <div class="row"></div>
+            <table id="IncomeTable" class=" compact table table-striped table-bordered" style="width:100%">
+                <!-- Header Table -->
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Income Type</th>
+                    <th>Income Description</th>
+                    <th>Stress Outcome</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th>Amount</th>
+                    <th>Action</th>
+
+
+                </tr>
+                </thead>
+                <!-- Footer Table -->
+                <tfoot>
+                <tr>
+                    <th>Id</th>
+                    <th>Income Type</th>
+                    <th>Income Description</th>
+                    <th>Stress Outcome</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th>Amount</th>
+                    <th>Action</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <!-- The Income Modal -->
+    <div class="modal" id="IncomeModal">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Income Type</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <label class="col-sm-2 control-label">Record ID</label>
+                        <div class="col-sm-1">
+                            <input type="text" class="form-control" id="m_income_record-id" readonly="true" value=""/>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label class="col-sm-2 control-label">Income Type</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" id="m_IncomeType"></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 control-label">Description</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="m_incomeDescription" value="0"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 control-label">Stress Outcome</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="m_income_stressOutcome" value="0"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 control-label"> From Date</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="m_income_fromDate" value="0"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 control-label"> To Date</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="m_income_toDate" value="0"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 control-label"> Amount</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="m_income_amount" value="0"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" id="IncomeModalSetDate" >Whole Period</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" id="IncomeModalSave">Save
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- The Outgoings Section -->
+    <div class="col-sm-10 main-body border border-primary" id="OutgoingsDiv">
+        <br/>
+        <button id="btnOutgoingsAdd" type="button" class="btn btn-outline-primary">Add Outgoings <span
+                class="glyphicon glyphicon-plus"></span></button>
+        <button id="btnDefaultOutgoings" type="button" class="btn btn-outline-primary">Add Default Outgoings <span
+                class="glyphicon glyphicon-plus"></span></button>
+        <br/>
+        <div class="row"></div>
+        <table id="OutgoingsTable" class=" table compact table-striped table-bordered" style="width:100%">
+            <!-- Header Table -->
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Outgoings Type</th>
+                <th>Outgoings Description</th>
+                <th>From Dated</th>
+                <th>To Date</th>
+                <th>Amount</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <!-- Footer Table -->
+            <tfoot>
+            <tr>
+                <th>Id</th>
+                <th>Outgoings Type</th>
+                <th>Outgoings Description</th>
+                <th>From Dated</th>
+                <th>To Date</th>
+                <th>Amount</th>
+                <th>Action</th>
+            </tr>
+            </tfoot>
+        </table>
+        .col-sm-6
+    </div>
+
+
+</div>
+<!-- The Outgoings Modal -->
+<div class="modal" id="OutgoingsModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Outgoings Type</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <label class="col-sm-2 control-label">Record ID</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="m_Outgoingsrecord-id" readonly="true" value=""/>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-sm-2 control-label"> Outgoings Type</label>
+                    <div class="col-sm-10">
+                        <select id="m_OutgoingsType"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-sm-2 control-label"> Description</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="m_OutgoingsDescription" value="0"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-sm-2 control-label"> From Date</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="m_OutgoingsfromDate" value="0"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-sm-2 control-label"> To Date</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="m_OutgoingstoDate" value="0"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-sm-2 control-label"> Amount</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="m_Outgoingsamount" value="0"/>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" id="OutgoingsModalSetDate" >Whole Period</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" id="OutgoingsModalSave">Save</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

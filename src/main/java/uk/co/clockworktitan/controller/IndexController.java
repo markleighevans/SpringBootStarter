@@ -45,4 +45,7 @@ public class IndexController {
     @GetMapping("/QuoteSummary")
     public String QuoteSummary() {return "QuoteSummary";}
 
+    @GetMapping("/Test")
+    public String Test() {return "Test";}
+
 }

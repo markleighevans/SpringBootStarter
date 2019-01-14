@@ -12,6 +12,7 @@ public class Income {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
     private Integer AffordabilityCaseID;
+    private Integer ApplicantNumber;
     private Integer IncomeTypeId;
     private String  IncomeDescription;
     private Integer StressOutcome;
@@ -19,9 +20,10 @@ public class Income {
     private Date ToDate;
     private Double Amount;
 
-    public Income(Integer IncomeTypeId, Integer AffordabilityCaseID, String  IncomeDescription, Integer StressOutcome,  Date FromDate, Date ToDate, Double Amount) {
+    public Income(Integer IncomeTypeId, Integer AffordabilityCaseID, Integer ApplicantNumber, String  IncomeDescription, Integer StressOutcome,  Date FromDate, Date ToDate, Double Amount) {
         this.IncomeTypeId = IncomeTypeId;
         this.AffordabilityCaseID = AffordabilityCaseID;
+        this.ApplicantNumber = ApplicantNumber;
         this.IncomeDescription = IncomeDescription;
         this.StressOutcome = StressOutcome;
         this.FromDate = FromDate;
@@ -38,6 +40,7 @@ public class Income {
         return "Income{" +
                 "id='" + id + '\'' +
                 "AffordabilityCaseID='" + AffordabilityCaseID + '\'' +
+                "ApplicantNumber='" + ApplicantNumber + '\'' +
                 ", IncomeTypeId='" + IncomeTypeId + '\'' +
                 ", IncomeDescription='" + IncomeDescription + '\'' +
                 ", StressOutcome='" + StressOutcome + '\'' +
@@ -62,6 +65,15 @@ public class Income {
     public void setAffordabilityCaseID(Integer AffordabilityCaseID ) {
         this.AffordabilityCaseID = AffordabilityCaseID;
     }
+
+
+    public Integer getApplicantNumber() {
+        return ApplicantNumber;
+    }
+    public void setApplicantNumber(Integer ApplicantNumber ) {
+        this.ApplicantNumber = ApplicantNumber;
+    }
+
 
     public Integer getIncomeTypeId() {
         return IncomeTypeId;

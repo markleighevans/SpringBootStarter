@@ -6,8 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uk.co.clockworktitan.DefaultOutgoingsRepository;
 import uk.co.clockworktitan.IncomeRepository;
-import uk.co.clockworktitan.model.AffordabilityCase;
-import uk.co.clockworktitan.model.DefaultOutgoings;
 import uk.co.clockworktitan.model.Income;
 
 @Controller    // This means that this class is a Controller
@@ -37,6 +35,7 @@ public class IncomeController {
             // no ID passed, so must be a new record
         {System.out.println("Blank System ID "); }
         n.setAffordabilityCaseID(Income.getAffordabilityCaseID());
+        n.setApplicantNumber(Income.getApplicantNumber());
         n.setIncomeTypeId(Income.getIncomeTypeId());
         n.setIncomeDescription(Income.getIncomeDescription());
         n.setStressOutcome(Income.getStressOutcome());

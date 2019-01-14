@@ -166,6 +166,7 @@ $('#m_toDate').datepicker({
 				    { "mData": "amount" ,
 				    render: $.fn.dataTable.render.number( ',', '.', 2, '£' )
 				    },
+				    { "mData": "proceededWith" },
 				    {   "data": null,
                                    "render": function(data) {
 

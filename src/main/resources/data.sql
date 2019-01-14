@@ -15,11 +15,11 @@ INSERT INTO income_type (income_type_name, income_type_weighting, index_linked, 
 INSERT INTO income_type (income_type_name, income_type_weighting, index_linked, stress_outcome) VALUES ("Rental Income",80, True, 100);
 INSERT INTO income_type (income_type_name, income_type_weighting, index_linked, stress_outcome) VALUES ("Defined Benefit Pension",100, True, 40);
 INSERT INTO income_type (income_type_name, income_type_weighting, index_linked, stress_outcome) VALUES ("Annuity",100, False, 50);
-INSERT INTO quote_summary (applicant1name, applicant2name, applicant_count, product_description, from_date, to_date, amount) VALUES ("Mr Smith","Mrs Smith", 2, "RIO 3%", "2018-12-29 00:00:00", "2099-12-29 00:00:00", 150000 );
-INSERT INTO quote_summary (applicant1name, applicant2name, applicant_count, product_description, from_date, to_date, amount) VALUES ("Mr Jones","Mrs Jones", 2, "55+ 3.4%", "2019-05-13 00:00:00", "2099-05-13 00:00:00", 125000);
-INSERT INTO quote_summary (applicant1name, applicant2name, applicant_count, product_description, from_date, to_date, amount) VALUES ("Mr Bond","Mrs Bond", 2, "55+ 3.4%", "2019-05-13 00:00:00", "2099-05-13 00:00:00", 125000);
-INSERT INTO quote_summary (applicant1name, applicant2name, applicant_count, product_description, from_date, to_date, amount) VALUES ("Mr Davies","Mrs Davies", 2, "55+ 3.4%", "2019-05-13 00:00:00", "2099-05-13 00:00:00", 140000);
-INSERT INTO quote_summary (applicant1name, applicant2name, applicant_count, product_description, from_date, to_date, amount) VALUES ("Mr Kurnow","Mrs Kurnow", 2, "55+ 3.4%", "2019-08-08 00:00:00", "2099-08-08 00:00:00", 160000);
+INSERT INTO quote_summary (applicant1name, applicant2name, applicant_count, product_description, from_date, to_date, amount, proceeded_with) VALUES ("Mr Smith","Mrs Smith", 2, "RIO 3%", "2019-03-29 00:00:00", "2054-03-29 00:00:00", 150000, false );
+INSERT INTO quote_summary (applicant1name, applicant2name, applicant_count, product_description, from_date, to_date, amount, proceeded_with) VALUES ("Mr Jones","Mrs Jones", 2, "55+ 3.4%", "2019-05-13 00:00:00", "2054-05-13 00:00:00", 125000, false);
+INSERT INTO quote_summary (applicant1name, applicant2name, applicant_count, product_description, from_date, to_date, amount, proceeded_with) VALUES ("Mr Bond","Mrs Bond", 2, "55+ 3.4%", "2019-05-13 00:00:00", "2054-05-13 00:00:00", 125000, false);
+INSERT INTO quote_summary (applicant1name, applicant2name, applicant_count, product_description, from_date, to_date, amount, proceeded_with) VALUES ("Mr Davies","Mrs Davies", 2, "55+ 3.4%", "2019-05-13 00:00:00", "2054-05-13 00:00:00", 140000, false);
+INSERT INTO quote_summary (applicant1name, applicant2name, applicant_count, product_description, from_date, to_date, amount, proceeded_with) VALUES ("Mr Kurnow","Mrs Kurnow", 2, "55+ 3.4%", "2019-08-08 00:00:00", "2054-08-08 00:00:00", 160000, false);
 INSERT INTO default_outgoings (outgoings_typeid , description, amount) VALUES (1, "Transport", 79.70);
 INSERT INTO default_outgoings (outgoings_typeid , description, amount) VALUES (2, "Recreation and culture", 73.5);
 INSERT INTO default_outgoings (outgoings_typeid , description, amount) VALUES (3, "Housing net fuel and power", 72.6);

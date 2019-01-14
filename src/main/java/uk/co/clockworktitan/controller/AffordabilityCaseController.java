@@ -5,14 +5,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uk.co.clockworktitan.AffordabilityCaseRepository;
+import uk.co.clockworktitan.ProjectionRepository;
 import uk.co.clockworktitan.QuoteSummaryRepository;
 import uk.co.clockworktitan.model.AffordabilityCase;
+import uk.co.clockworktitan.model.Projection;
 import uk.co.clockworktitan.model.QuoteSummary;
 import java.text.NumberFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
 @Controller    // This means that this class is a Controller
-@RequestMapping(path="/AffordabilityCase") // This means URL's start with /demo (after Application path)
+@RequestMapping(path="/AffordabilityCase") // This means URL's start with /AffordabilityCase (after Application path)
 
 
 public class AffordabilityCaseController {
@@ -22,6 +25,8 @@ public class AffordabilityCaseController {
     // used to populate case from quote
     @Autowired
     private QuoteSummaryRepository _QuoteSummaryRepository;
+    @Autowired
+    private ProjectionRepository _ProjectionRepository;
 
     //@GetMapping(path="/add") // Map ONLY GET Requests
     @PostMapping(path="/add")
@@ -40,6 +45,8 @@ public class AffordabilityCaseController {
         n.setoriginatingQuoteID(_AffordabilityCase.getoriginatingQuoteID());
         n.setName(_AffordabilityCase.getName());
         n.setApplicantCount(_AffordabilityCase.getApplicantCount());
+        n.setApplicant1Name(_AffordabilityCase.getApplicant1Name());
+        n.setApplicant2Name(_AffordabilityCase.getApplicant2Name());
         AffordabilityCaseRepository.save(n);
 
         JSONObject obj = new JSONObject();
@@ -64,10 +71,14 @@ public class AffordabilityCaseController {
 
             n.setName("Case for " + tinker.getApplicant1Name()+ " & "+ tinker.getApplicant2Name()  + " for product " + tinker.getProductDescription() + " for the value of " + Amount );
             n.setApplicantCount(tinker.getApplicantCount());
+            n.setApplicant1Name(tinker.getApplicant1Name());
+            n.setApplicant2Name(tinker.getApplicant2Name());
             n.setFromDate(tinker.getFromDate());
             n.setToDate(tinker.getToDate());
             n.setoriginatingQuoteID(_QuoteSummary.getId());
             AffordabilityCaseRepository.save(n);
+            tinker.setProceededWith(true); // set the Quote Summary Record to show a DIP case has been created
+            _QuoteSummaryRepository.save(tinker);
             CaseRecordID = n.getId();
         }
         else
@@ -78,6 +89,41 @@ public class AffordabilityCaseController {
         JSONObject obj = new JSONObject();
 
         obj.put("id", CaseRecordID);
+
+        return obj.toJSONString();
+    }
+
+    @GetMapping(path="/CreateProjection/")
+    public @ResponseBody  String CreateProjection () {
+        System.out.println("CreateProjection called");
+        Integer CaseRecordID = 0;
+       // AffordabilityCase CaseRecord = AffordabilityCaseRepository.findOne(AffordabilityCase.getId());
+        AffordabilityCase CaseRecord = AffordabilityCaseRepository.findOne(1);
+        if ( CaseRecord != null) {
+            Calendar fromDate =  Calendar.getInstance();
+            fromDate.setTime(CaseRecord.getFromDate());
+
+            Calendar toDate = Calendar.getInstance();
+            toDate.setTime(CaseRecord.getToDate());
+
+            Calendar iteratorDate = fromDate;
+
+            while (iteratorDate.compareTo(toDate) < 1) {
+                Projection CaseProjection = new Projection();
+                System.out.println(iteratorDate.getTime().toString());
+                CaseProjection.setProjectionDate(iteratorDate.getTime());
+                _ProjectionRepository.save(CaseProjection);
+                iteratorDate.add(Calendar.MONTH, 1);
+            }
+        }
+        else
+        {
+            System.out.println("No Case Record Found!");
+        }
+
+        JSONObject obj = new JSONObject();
+
+        obj.put("id", 1);
 
         return obj.toJSONString();
     }

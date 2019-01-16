@@ -93,12 +93,12 @@ public class AffordabilityCaseController {
         return obj.toJSONString();
     }
 
-    @GetMapping(path="/CreateProjection/")
-    public @ResponseBody  String CreateProjection () {
+    @PostMapping(path="/CreateProjection/")
+    public @ResponseBody  String CreateProjection (@RequestBody AffordabilityCase _AffordabilityCase) {
         System.out.println("CreateProjection called");
         Integer CaseRecordID = 0;
        // AffordabilityCase CaseRecord = AffordabilityCaseRepository.findOne(AffordabilityCase.getId());
-        AffordabilityCase CaseRecord = AffordabilityCaseRepository.findOne(1);
+        AffordabilityCase CaseRecord = AffordabilityCaseRepository.findOne(_AffordabilityCase.getId());
         if ( CaseRecord != null) {
             Calendar fromDate =  Calendar.getInstance();
             fromDate.setTime(CaseRecord.getFromDate());
@@ -112,8 +112,10 @@ public class AffordabilityCaseController {
                 Projection CaseProjection = new Projection();
                 System.out.println(iteratorDate.getTime().toString());
                 CaseProjection.setProjectionDate(iteratorDate.getTime());
+                CaseProjection.setAffordabilityCaseID(_AffordabilityCase.getId());
+                CaseProjection.setDeafultIncomeAmount(15000.00);
                 _ProjectionRepository.save(CaseProjection);
-                iteratorDate.add(Calendar.MONTH, 1);
+                iteratorDate.add(Calendar.YEAR, 1);
             }
         }
         else

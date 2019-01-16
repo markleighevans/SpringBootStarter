@@ -243,6 +243,39 @@ function SaveIncome(){
 
                 }
 
+function CreateProjection(){
+                	// PREPARE FORM DATA
+                	console.log('CreateDefaultOutgoings: '+ $('#m_CaseFromDate').datepicker('getDate').getDate());
+                	var formData = {
+                		id : $( "#m_affordability_record-id").val(),
+                		fromDate:    $('#m_CaseFromDate').datepicker('getDate'),
+                        toDate:      $('#m_CaseToDate').datepicker('getDate')
+
+
+                	}
+
+                	// DO POST
+                	console.log('Posting /Outgoings/add ' +  JSON.stringify(formData));
+                	$.ajax({
+            			type : "POST",
+            			contentType : "application/json",
+            			url : "/AffordabilityCase/CreateProjection/",
+            			data : JSON.stringify(formData),
+            			dataType : 'json',
+            			success : function(data, status, jqXHR) {
+            				//alert("Successfully posted"+ data);
+            				TableRefresh('#OutgoingsTable', false);
+            			},
+            			error: function (xhr, ajaxOptions, thrownError) {
+                                alert(xhr.status);
+                                alert(thrownError);
+                                console.log('Post Error '+ xhr.status);
+                                console.log('Post Error '+ thrownError);
+                              }
+            		});
+
+
+                }
 
 
 function PopulateCaseData (affordability_record_id)
@@ -543,9 +576,18 @@ PopulateIncomeTable(affordability_record_id);
         {
             $('#IncomeDiv').show();
             $('#OutgoingsDiv').hide();
+             $('#ProjectionDiv').hide();
         }
     } );
 
+$('#btnProjection').click( function () {
+        if ($('#IncomeDiv').css('display') == 'none')
+        {
+            $('#ProjectionDiv').show();
+            $('#OutgoingsDiv').hide();
+            $('#IncomeDiv').hide();
+        }
+    } );
 
 
  $('#btnOutgoings').click( function () {
@@ -553,11 +595,8 @@ PopulateIncomeTable(affordability_record_id);
         {
             $('#OutgoingsDiv').show();
              $('#IncomeDiv').hide();
+              $('#ProjectionDiv').hide();
 
-        }
-        else
-        {
-             $('#OutgoingsDiv').hide();
         };
     } );
 
@@ -623,5 +662,10 @@ $('#btnOutgoingsAdd').click ( function()
     }
 );
 
+$('#btnCreatProjection').click ( function()
+    {
+        CreateProjection();
+    }
+);
 
 } );

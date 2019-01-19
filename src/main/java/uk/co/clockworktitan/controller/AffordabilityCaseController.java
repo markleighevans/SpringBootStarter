@@ -113,7 +113,7 @@ public class AffordabilityCaseController {
                 System.out.println(iteratorDate.getTime().toString());
                 CaseProjection.setProjectionDate(iteratorDate.getTime());
                 CaseProjection.setAffordabilityCaseID(_AffordabilityCase.getId());
-                CaseProjection.setDeafultIncomeAmount(15000.00);
+                CaseProjection.setDefaultIncomeAmount(15000.00);
                 _ProjectionRepository.save(CaseProjection);
                 iteratorDate.add(Calendar.YEAR, 1);
             }

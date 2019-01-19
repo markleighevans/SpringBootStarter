@@ -74,7 +74,7 @@ public class OutgoingsController {
             n.setOutgoingsDescription(DefaultOutgoings.getDescription());
             n.setFromDate(_AffordabilityCase.getFromDate());
             n.setToDate(_AffordabilityCase.getToDate());
-            n.setAmount(DefaultOutgoings.getAmount()*4.33333); //ONS stats are weekly, so convert to monthly
+            n.setAmount(DefaultOutgoings.getAmount()*52); //ONS stats are weekly, so convert to annual
             OutgoingsRepository.save(n);
 
         }

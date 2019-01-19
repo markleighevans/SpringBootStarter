@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Spring-boot-example" />
         <module name="Springbootexample" />
+        <module name="SpringBootStarter" />
       </profile>
     </annotationProcessing>
   </component>

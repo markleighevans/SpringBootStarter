@@ -160,7 +160,7 @@ function SaveIncome(){
     			dataType : 'json',
     			success : function(data, status, jqXHR) {
     				//alert("Successfully posted"+ data);
-    				TableRefresh('#IncomeTable', false);
+    				TableRefresh('#ProjectionTable', false);
     			},
     			error: function (xhr, ajaxOptions, thrownError) {
                         alert(xhr.status);
@@ -245,7 +245,7 @@ function SaveIncome(){
 
 function CreateProjection(){
                 	// PREPARE FORM DATA
-                	console.log('CreateDefaultOutgoings: '+ $('#m_CaseFromDate').datepicker('getDate').getDate());
+                	console.log('CreateProjection: '+ $('#m_CaseFromDate').datepicker('getDate').getDate());
                 	var formData = {
                 		id : $( "#m_affordability_record-id").val(),
                 		fromDate:    $('#m_CaseFromDate').datepicker('getDate'),
@@ -264,7 +264,7 @@ function CreateProjection(){
             			dataType : 'json',
             			success : function(data, status, jqXHR) {
             				//alert("Successfully posted"+ data);
-            				TableRefresh('#OutgoingsTable', false);
+            				PopulateProjectionTable('#ProjectionTable', false);
             			},
             			error: function (xhr, ajaxOptions, thrownError) {
                                 alert(xhr.status);
@@ -436,6 +436,48 @@ function PopulateOutgoingsTable (affordability_record_id)
  			]
  	 })
 }
+
+function PopulateProjectionTable(affordability_record_id)
+{
+// Populate the Income Table List
+	 var table = $('#ProjectionTable').DataTable({
+            ajax: {
+                    type : 'GET',
+                    url: '/Projection/FindbyAffordabilityCaseID/' + affordability_record_id,
+                                          dataSrc: ''},
+			"order": [[ 0, "asc" ]],
+			"aoColumns": [
+			        { "mData": "id"},
+			        { "mData":  "projectionDate"},
+                    { "mData": "defaultIncomeAmount",
+				    render: $.fn.dataTable.render.number( ',', '.', 2, '£' )
+				    },
+
+				    { "mData": "stress1IncomeAmount",
+				    render: $.fn.dataTable.render.number( ',', '.', 2, '£' )
+				    },
+				    { "mData": "stress2IncomeAmount",
+                    render: $.fn.dataTable.render.number( ',', '.', 2, '£' )
+   				    },
+   				     { "mData": "outgoingsAmount",
+                                        render: $.fn.dataTable.render.number( ',', '.', 2, '£' )
+                       				    },
+  { "mData": "defaultSurplusAmount",
+                                        render: $.fn.dataTable.render.number( ',', '.', 2, '£' )
+                       				    },
+ { "mData": "stress1SurplusAmount",
+                    render: $.fn.dataTable.render.number( ',', '.', 2, '£' )
+   				    },
+{ "mData": "stress2SurplusAmount",
+                    render: $.fn.dataTable.render.number( ',', '.', 2, '£' )
+   				    }
+
+				]
+             	 })
+            }
+
+
+
 function CreateNewCase(){
         	// PREPARE FORM DATA
         	var formData =
@@ -474,6 +516,9 @@ function CreateNewCase(){
 /////////////////// $(document).ready( function () //////////////////////////////////////////
 $(document).ready( function () {
     $("#IncomeModal").modal('hide');
+    $("#OutgoingsModal").modal('hide');
+
+
 
 $('#m_CaseFromDate').datepicker();
 $('#m_CaseToDate').datepicker();
@@ -564,11 +609,14 @@ $('#m_OutgoingstoDate').datepicker({
 
      });
        $('#IncomeDiv').show();
-                 $('#OutgoingsDiv').hide();
+       $('#OutgoingsDiv').hide();
+       $('#ProjectionDiv').hide();
+
 
 PopulateCaseData (affordability_record_id);
 PopulateOutgoingsTable(affordability_record_id);
 PopulateIncomeTable(affordability_record_id);
+PopulateProjectionTable(affordability_record_id);
 
 
  $('#btnIncome').click( function () {
@@ -581,7 +629,7 @@ PopulateIncomeTable(affordability_record_id);
     } );
 
 $('#btnProjection').click( function () {
-        if ($('#IncomeDiv').css('display') == 'none')
+        if ($('#ProjectionDiv').css('display') == 'none')
         {
             $('#ProjectionDiv').show();
             $('#OutgoingsDiv').hide();
@@ -665,6 +713,7 @@ $('#btnOutgoingsAdd').click ( function()
 $('#btnCreatProjection').click ( function()
     {
         CreateProjection();
+       // PopulateProjection(affordability_record_id)
     }
 );
 

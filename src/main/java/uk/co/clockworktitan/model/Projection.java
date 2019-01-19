@@ -13,7 +13,7 @@ public class Projection {
     private Integer id;
     private Integer AffordabilityCaseID;
     private Date ProjectionDate;
-    private Double DeafultIncomeAmount;
+    private Double DefaultIncomeAmount;
     private Double Stress1IncomeAmount;
     private Double Stress2IncomeAmount;
     private Double OutgoingsAmount;
@@ -21,11 +21,11 @@ public class Projection {
     private Double Stress1SurplusAmount;
     private Double Stress2SurplusAmount;
     
-    public Projection(Integer id,  Integer AffordabilityCaseID, Date ProjectionDate, Double DeafultIncomeAmount, Double Stress1IncomeAmount, Double Stress2IncomeAmount, Double OutgoingsAmount, Double DefaultSurplusAmount, Double Stress1SurplusAmount, Double Stress2SurplusAmount  ) {
+    public Projection(Integer id,  Integer AffordabilityCaseID, Date ProjectionDate, Double DefaultIncomeAmount, Double Stress1IncomeAmount, Double Stress2IncomeAmount, Double OutgoingsAmount, Double DefaultSurplusAmount, Double Stress1SurplusAmount, Double Stress2SurplusAmount  ) {
         this.id = id;
         this.AffordabilityCaseID = AffordabilityCaseID;
         this.ProjectionDate = ProjectionDate;
-        this.DeafultIncomeAmount = DeafultIncomeAmount;
+        this.DefaultIncomeAmount = DefaultIncomeAmount;
         this.Stress1IncomeAmount = Stress1IncomeAmount;
         this.Stress2IncomeAmount = Stress2IncomeAmount;
         this.OutgoingsAmount = OutgoingsAmount;
@@ -46,7 +46,7 @@ public class Projection {
                 "AffordabilityCaseID='" + AffordabilityCaseID + '\'' +
         "AffordabilityCaseID ='" + AffordabilityCaseID + '\'' +
         "ProjectionDate ='" + ProjectionDate + '\'' +
-        "DeafultIncomeAmount ='" + DeafultIncomeAmount + '\'' +
+        "DefaultIncome ='" + DefaultIncomeAmount + '\'' +
         "Stress1IncomeAmount ='" + Stress1IncomeAmount + '\'' +
         "Stress2IncomeAmount ='" + Stress2IncomeAmount + '\'' +
         "OutgoingsAmount ='" + OutgoingsAmount + '\'' +
@@ -74,8 +74,8 @@ public class Projection {
     public Date getProjectionDate() {return ProjectionDate;}
     public void setProjectionDate(Date ProjectionDate) { this.ProjectionDate = ProjectionDate;}
 
-    public Double getDeafultIncomeAmount() {return DeafultIncomeAmount;}
-    public void  setDeafultIncomeAmount(Double DeafultIncomeAmount) {this.DeafultIncomeAmount = DeafultIncomeAmount;}
+    public Double getDefaultIncomeAmount() {return DefaultIncomeAmount;}
+    public void  setDefaultIncomeAmount(Double DefaultIncomeAmount) {this.DefaultIncomeAmount = DefaultIncomeAmount;}
 
     public Double getStress1IncomeAmount() {return Stress1IncomeAmount;}
     public void  setStress1IncomeAmount(Double Stress1IncomeAmount) {this.Stress1IncomeAmount = Stress1IncomeAmount;}

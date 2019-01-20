@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
 
 @Entity // This tells Hibernate to make a table out of this class
 
@@ -19,18 +18,18 @@ public class AffordabilityCase {
     private String Applicant1Name;
     private String Applicant2Name;
     private CaseStatus Status;
-    private Date FromDate;
-    private Date ToDate;
+    private Integer FromYear;
+    private Integer ToYear;
 
-    public AffordabilityCase(Integer ID, Integer originatingQuoteID, String name, Integer ApplicantCount, String Applicant1Name, String Applicant2Name, Date FromDate, Date ToDate) {
+    public AffordabilityCase(Integer ID, Integer originatingQuoteID, String name, Integer ApplicantCount, String Applicant1Name, String Applicant2Name, Integer FromYear, Integer ToYear) {
         this.id = ID;
         this.originatingQuoteID = originatingQuoteID;
         this.ApplicantCount = ApplicantCount;
         this.Applicant1Name = Applicant1Name;
         this.Applicant2Name = Applicant2Name;
         this.name =  name;
-        this.FromDate = FromDate;
-        this.ToDate = ToDate;
+        this.FromYear = FromYear;
+        this.ToYear = ToYear;
         this.Status = CaseStatus.PENDING;
     }
 
@@ -47,17 +46,15 @@ public class AffordabilityCase {
                 ", ApplicantCount='" + ApplicantCount + '\'' +
                 ", Applicant1Name='" + Applicant1Name + '\'' +
                 ", Applicant2Name='" + Applicant2Name + '\'' +
-                ", FromDate='" + FromDate + '\'' +
-                ", ToDate='" + ToDate + '\'' +
+                ", FromYear='" + FromYear + '\'' +
+                ", ToYear='" + ToYear + '\'' +
                 ", CaseStatus ='" + Status + '\'' +
                 '}';
     }
 
-
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -95,23 +92,21 @@ public class AffordabilityCase {
         this.ApplicantCount = ApplicantCount;
     }
 
-    //@JsonFormat
-      //      (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    public Date getFromDate() {
-        return FromDate;
+    public Integer getFromYear() {
+        return FromYear;
     }
-    public void setFromDate(Date FromDate) {
-        this.FromDate = FromDate;
+    public void setFromYear(Integer FromYear) {
+        this.FromYear = FromYear;
     }
 
-    //@JsonFormat
-      //      (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    public Date getToDate() {
-        return ToDate;
+    public Integer getToYear() {
+        return ToYear;
     }
-    public void setToDate(Date ToDate) {
-        this.ToDate = ToDate;
+    public void setToYear(Integer ToYear) {
+        this.ToYear = ToYear;
     }
+
+
 
 
 

@@ -43,8 +43,8 @@ public class OutgoingsController {
         n.setOutgoingsTypeId(Outgoings.getOutgoingsTypeId());
         n.setAffordabilityCaseID(Outgoings.getAffordabilityCaseID());
         n.setOutgoingsDescription(Outgoings.getOutgoingsDescription());
-        n.setFromDate(Outgoings.getFromDate());
-        n.setToDate(Outgoings.getToDate());
+        n.setFromYear(Outgoings.getFromYear());
+        n.setToYear(Outgoings.getToYear());
         n.setAmount(Outgoings.getAmount());
         OutgoingsRepository.save(n);
 
@@ -72,8 +72,8 @@ public class OutgoingsController {
             n.setAffordabilityCaseID(_AffordabilityCase.getId());
             n.setOutgoingsTypeId(DefaultOutgoings.getOutgoingsTypeID());
             n.setOutgoingsDescription(DefaultOutgoings.getDescription());
-            n.setFromDate(_AffordabilityCase.getFromDate());
-            n.setToDate(_AffordabilityCase.getToDate());
+            n.setFromYear(_AffordabilityCase.getFromYear());
+            n.setToYear(_AffordabilityCase.getToYear());
             n.setAmount(DefaultOutgoings.getAmount()*52); //ONS stats are weekly, so convert to annual
             OutgoingsRepository.save(n);
 

@@ -3,7 +3,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
 
 @Entity // This tells Hibernate to make a table out of this class
 
@@ -14,16 +13,16 @@ public class Outgoings {
     private Integer AffordabilityCaseID;
     private Integer OutgoingsTypeId;
     private String  OutgoingsDescription;
-    private Date FromDate;
-    private Date ToDate;
+    private Integer FromYear;
+    private Integer ToYear;
     private Double Amount;
 
-    public Outgoings(Integer OutgoingsTypeId, Integer AffordabilityCaseID, String  OutgoingsDescription, Date FromDate, Date ToDate, Double Amount) {
+    public Outgoings(Integer OutgoingsTypeId, Integer AffordabilityCaseID, String  OutgoingsDescription, Integer FromYear, Integer ToYear, Double Amount) {
         this.OutgoingsTypeId = OutgoingsTypeId;
         this.AffordabilityCaseID = AffordabilityCaseID;
         this.OutgoingsDescription = OutgoingsDescription;
-        this.FromDate = FromDate;
-        this.ToDate = ToDate;
+        this.FromYear = FromYear;
+        this.ToYear = ToYear;
         this.Amount = Amount;
     }
 
@@ -38,8 +37,8 @@ public class Outgoings {
                 ", OutgoingsTypeId='" + OutgoingsTypeId + '\'' +
                 ", AffordabilityCaseID='" + AffordabilityCaseID + '\'' +
                 ", OutgoingsDescription='" + OutgoingsDescription + '\'' +
-                ", FromDate='" + FromDate + '\'' +
-                ", ToDate='" + ToDate + '\'' +
+                ", FromYear='" + FromYear + '\'' +
+                ", ToYear='" + ToYear + '\'' +
                 ", Amount='" + Amount + '\'' +
 
                 '}';
@@ -75,18 +74,18 @@ public class Outgoings {
         this.OutgoingsDescription = OutgoingsDescription;
     }
 
-    public Date getFromDate() {
-        return FromDate;
+    public Integer getFromYear() {
+        return FromYear;
     }
-    public void setFromDate(Date FromDate) {
-        this.FromDate = FromDate;
+    public void setFromYear(Integer FromYear) {
+        this.FromYear = FromYear;
     }
 
-    public Date getToDate() {
-        return ToDate;
+    public Integer getToYear() {
+        return ToYear;
     }
-    public void setToDate(Date ToDate) {
-        this.ToDate = ToDate;
+    public void setToYear(Integer ToYear) {
+        this.ToYear = ToYear;
     }
 
     public Double getAmount() {return Amount;}

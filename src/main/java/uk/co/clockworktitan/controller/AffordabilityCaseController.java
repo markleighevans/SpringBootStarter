@@ -4,15 +4,11 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import uk.co.clockworktitan.AffordabilityCaseRepository;
-import uk.co.clockworktitan.ProjectionRepository;
-import uk.co.clockworktitan.QuoteSummaryRepository;
-import uk.co.clockworktitan.model.AffordabilityCase;
-import uk.co.clockworktitan.model.Projection;
-import uk.co.clockworktitan.model.QuoteSummary;
+import uk.co.clockworktitan.*;
+import uk.co.clockworktitan.model.*;
+
 import java.text.NumberFormat;
-import java.util.Calendar;
-import java.util.Locale;
+import java.util.*;
 
 @Controller    // This means that this class is a Controller
 @RequestMapping(path="/AffordabilityCase") // This means URL's start with /AffordabilityCase (after Application path)
@@ -27,6 +23,13 @@ public class AffordabilityCaseController {
     private QuoteSummaryRepository _QuoteSummaryRepository;
     @Autowired
     private ProjectionRepository _ProjectionRepository;
+    @Autowired
+    private IncomeRepository _IncomeRepository;
+    @Autowired
+    private OutgoingsRepository _OutgoingsRepository;
+    @Autowired
+    private InflationRepository  _InflationRepository;
+
 
     //@GetMapping(path="/add") // Map ONLY GET Requests
     @PostMapping(path="/add")
@@ -63,6 +66,7 @@ public class AffordabilityCaseController {
     if ( CaseRecord== null)
         {
             // No case record exists for the quote, so will create a new one
+            Calendar cal = Calendar.getInstance();
             AffordabilityCase n = new AffordabilityCase();
             QuoteSummary tinker = _QuoteSummaryRepository.findOne(_QuoteSummary.getId());
             System.out.println("creating an affordability case for quote " + _QuoteSummary.getId());
@@ -73,8 +77,12 @@ public class AffordabilityCaseController {
             n.setApplicantCount(tinker.getApplicantCount());
             n.setApplicant1Name(tinker.getApplicant1Name());
             n.setApplicant2Name(tinker.getApplicant2Name());
-            n.setFromDate(tinker.getFromDate());
-            n.setToDate(tinker.getToDate());
+            // while the case/quote maybe for specific dates, we only check affordability at a year level
+
+            cal.setTime(tinker.getFromDate());
+            n.setFromYear( cal.get(Calendar.YEAR));
+            cal.setTime(tinker.getToDate());
+            n.setToYear(cal.get(Calendar.YEAR));
             n.setoriginatingQuoteID(_QuoteSummary.getId());
             AffordabilityCaseRepository.save(n);
             tinker.setProceededWith(true); // set the Quote Summary Record to show a DIP case has been created
@@ -96,26 +104,28 @@ public class AffordabilityCaseController {
     @PostMapping(path="/CreateProjection/")
     public @ResponseBody  String CreateProjection (@RequestBody AffordabilityCase _AffordabilityCase) {
         System.out.println("CreateProjection called");
-        Integer CaseRecordID = 0;
-       // AffordabilityCase CaseRecord = AffordabilityCaseRepository.findOne(AffordabilityCase.getId());
         AffordabilityCase CaseRecord = AffordabilityCaseRepository.findOne(_AffordabilityCase.getId());
         if ( CaseRecord != null) {
-            Calendar fromDate =  Calendar.getInstance();
-            fromDate.setTime(CaseRecord.getFromDate());
 
-            Calendar toDate = Calendar.getInstance();
-            toDate.setTime(CaseRecord.getToDate());
+            System.out.println("Creating a projection for years"+ CaseRecord.getFromYear() + " to " +CaseRecord.getToYear());
+            Integer iteratorYear = CaseRecord.getFromYear();
 
-            Calendar iteratorDate = fromDate;
-
-            while (iteratorDate.compareTo(toDate) < 1) {
+            while (iteratorYear <= CaseRecord.getToYear()) {
+                getInflationBetweenYears(CaseRecord.getFromYear(), iteratorYear);
                 Projection CaseProjection = new Projection();
-                System.out.println(iteratorDate.getTime().toString());
-                CaseProjection.setProjectionDate(iteratorDate.getTime());
+                Double DefaultIncomeForYear = getDefaultIncomeForYear(_AffordabilityCase.getId(), iteratorYear);
+                Double OutgoingsAmountForYear = getOutgoingsForYear(_AffordabilityCase.getId(), iteratorYear);
+                Double DefaultSurplusForYear = DefaultIncomeForYear - OutgoingsAmountForYear;
+                System.out.println("Creating projection for year:" + iteratorYear);
+                CaseProjection.setProjectionYear(iteratorYear);
                 CaseProjection.setAffordabilityCaseID(_AffordabilityCase.getId());
-                CaseProjection.setDefaultIncomeAmount(15000.00);
+                //System.out.println(getDefaultIncomeForYear(_AffordabilityCase.getId(), iteratorYear));
+
+                CaseProjection.setDefaultIncomeAmount(DefaultIncomeForYear);
+                CaseProjection.setOutgoingsAmount(OutgoingsAmountForYear);
+                CaseProjection.setDefaultSurplusAmount(DefaultSurplusForYear);
                 _ProjectionRepository.save(CaseProjection);
-                iteratorDate.add(Calendar.YEAR, 1);
+                iteratorYear++;
             }
         }
         else
@@ -149,5 +159,65 @@ public class AffordabilityCaseController {
         // This returns a JSON or XML with a single user
        // System.out.println("Query Paramter:" + num1);
         AffordabilityCaseRepository.delete(num2);
+    }
+
+    private Double getDefaultIncomeForYear(Integer AffordabilityCaseID, Integer ProjectionYear)
+    {
+            Iterable <Income> _Income  = _IncomeRepository.findAllByAffordabilityCaseIDandYear(AffordabilityCaseID, ProjectionYear);
+            Iterator<Income>  _IncomeIterator = _Income.iterator();
+            Double ReturnAmount = 0.0;
+            while (_IncomeIterator.hasNext())
+            {
+                Income IncomeRecord = _IncomeIterator.next();
+                System.out.println("Iterating Income Set");
+                ReturnAmount = ReturnAmount + IncomeRecord.getAmount();
+                //TODO add weighting into calculation
+
+            }
+
+        return ReturnAmount;
+    }
+    private Double getOutgoingsForYear(Integer AffordabilityCaseID, Integer ProjectionYear)
+    {
+        Iterable <Outgoings> _Outgoings  = _OutgoingsRepository.findAllByAffordabilityCaseIDandYear(AffordabilityCaseID, ProjectionYear);
+        Iterator<Outgoings>  _OutgoimgsIterator = _Outgoings.iterator();
+        Double ReturnAmount = 0.0;
+        while (_OutgoimgsIterator.hasNext())
+        {
+            Outgoings OutgoingsRecord = _OutgoimgsIterator.next();
+            System.out.println("Iterating Outgoings Set");
+            ReturnAmount = ReturnAmount + OutgoingsRecord.getAmount();
+
+        }
+
+        return ReturnAmount;
+    }
+    private Double getInflationBetweenYears(Integer  StartYear, Integer EndYear)
+    {
+        Integer YearIterator = StartYear;
+        Double YearAmount = 0.0;
+        Double TotalAmount = 1.0;
+        while (YearIterator < EndYear )
+        {
+            ////////////////////////////////////////////////////////
+            Iterable <Inflation> _Inflation  = _InflationRepository.findAllByInflationYear( YearIterator);
+            Iterator<Inflation>  _InflationIterator = _Inflation.iterator();
+            YearAmount = 0.0;
+            while (_InflationIterator.hasNext())
+            {
+                Inflation InflationRecord = _InflationIterator.next();
+                YearAmount = YearAmount + InflationRecord.getinflation();
+                //TODO - this will return the wrong value in the event of duplicate records (need to set constraints on table)
+
+            }
+            System.out.println("YearAmount" + YearAmount);
+
+            TotalAmount = TotalAmount+ ((YearAmount/100) * TotalAmount);
+            ///////////////////////////////////////////////////////
+            YearIterator++;
+        }
+        System.out.println("Total Inflation Between Years"+ StartYear + " - " + EndYear + "=" + TotalAmount);
+
+        return TotalAmount;
     }
 }

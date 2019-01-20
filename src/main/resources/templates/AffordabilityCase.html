@@ -84,12 +84,7 @@
                 <input type="text" class="form-control" id="m_Case_Description" readonly="true"  value="0"/>
             </div>
         </div>
-        <div class="row">
-            <label class="col-sm-2 control-label"> Number of Applicants</label>
-            <div class="col-sm-2">
-                <input type="text" class="form-control" id="m_Applicant_Count" readonly="true" value="0"/>
-            </div>
-        </div>
+
         <div class="row">
             <label class="col-sm-2 control-label"> Number of Applicants</label>
             <div class="col-sm-2">
@@ -109,15 +104,15 @@
             </div>
         </div>
         <div class="row">
-            <label class="col-sm-2 control-label"> From Date</label>
+            <label class="col-sm-2 control-label"> From Year</label>
             <div class="col-sm-2">
-                <input type="text" class="form-control" id="m_CaseFromDate" readonly="true" value="0"/>
+                <input type="text" class="form-control" id="m_CaseFromYear" readonly="true" value="0"/>
             </div>
         </div>
         <div class="row">
-            <label class="col-sm-2 control-label"> To Date</label>
+            <label class="col-sm-2 control-label"> To Year</label>
             <div class="col-sm-2">
-                <input type="text" class="form-control" id="m_CaseToDate" readonly="true" value="0"/>
+                <input type="text" class="form-control" id="m_CaseToYear" readonly="true" value="0"/>
             </div>
         </div>
         <br/>
@@ -134,7 +129,7 @@
         <div class="row">
             </div>
 
-        <div class="main-body col-sm-10 border border-primary" id="ProjectionDiv">
+        <div class="main-body col-sm-10 " id="ProjectionDiv">
             <br/>
             <button id="btnCreatProjection" type="button" class="btn btn-outline-primary"><span
                     class="glyphicon glyphicon-plus"></span>
@@ -146,35 +141,35 @@
                 <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Date</th>
+                    <th>Year</th>
                     <th>Deafult Income </th>
                     <th>Stress 1 Income </th>
                     <th>Stress 2 Income </th>
                     <th>Outgoings  </th>
                     <th>Default Surplus</th>
                     <th>Stress 1 Surplus</th>
-                    <th>tress 1 Surplus</th>
+                    <th>Stress 2 Surplus</th>
                 </tr>
                 </thead>
                 <!-- Footer Table -->
                 <tfoot>
                 <tr>
                     <th>Id</th>
-                    <th>Date</th>
+                    <th>Year</th>
                     <th>Deafult Income </th>
                     <th>Stress 1 Income </th>
                     <th>Stress 2 Income </th>
-                    <th>Outgoings  </th>
+                    <th>Outgoings</th>
                     <th>Default Surplus</th>
                     <th>Stress 1 Surplus</th>
-                    <th>tress 1 Surplus</th>
+                    <th>Stress 2 Surplus</th>
                 </tr>
                 </tfoot>
             </table>
             <div class="row"></div>
 
         </div>
-        <div class="main-body col-sm-10 border border-primary" id="IncomeDiv">
+        <div class="main-body col-sm-10 " id="IncomeDiv">
             <br/>
             <button id="btnIncomeAdd" type="button" class="btn btn-outline-primary"><span
                     class="glyphicon glyphicon-plus"></span>
@@ -191,8 +186,9 @@
                     <th>Income Type</th>
                     <th>Income Description</th>
                     <th>Stress Outcome</th>
-                    <th>From Date</th>
-                    <th>To Date</th>
+                    <th>Index Linked </th>
+                    <th>From Year</th>
+                    <th>To Year</th>
                     <th>Amount</th>
                     <th>Action</th>
 
@@ -207,8 +203,9 @@
                     <th>Income Type</th>
                     <th>Income Description</th>
                     <th>Stress Outcome</th>
-                    <th>From Date</th>
-                    <th>To Date</th>
+                    <th>Index Linked </th>
+                    <th>From Year</th>
+                    <th>To Year</th>
                     <th>Amount</th>
                     <th>Action</th>
                 </tr>
@@ -238,8 +235,8 @@
                     </div>
                     <div class="row">
                         <label class="col-sm-2 control-label">Applicant Number</label>
-                        <div class="col-sm-1">
-                            <input type="text" class="form-control" id="m_ApplicantNumber"  value=""/>
+                        <div class="col-sm-4">
+                            <select class="form-control" id="m_ApplicantNumber"></select>
                         </div>
                     </div>
 
@@ -262,15 +259,22 @@
                         </div>
                     </div>
                     <div class="row">
-                        <label class="col-sm-2 control-label"> From Date</label>
+                    <label class="col-sm-2 control-label"> Index Linked</label>
+                    <div class="col-sm-10">
+                        <input type="checkbox" id="m_indexLinked" value="True"/>
+                    </div>
+                    </div>
+
+                    <div class="row">
+                        <label class="col-sm-2 control-label"> From Year</label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" id="m_income_fromDate" value="0"/>
+                            <input type="text" class="form-control" id="m_income_fromYear" value="0"/>
                         </div>
                     </div>
                     <div class="row">
-                        <label class="col-sm-2 control-label"> To Date</label>
+                        <label class="col-sm-2 control-label"> To Year</label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" id="m_income_toDate" value="0"/>
+                            <input type="text" class="form-control" id="m_income_toYear" value="0"/>
                         </div>
                     </div>
                     <div class="row">
@@ -283,7 +287,7 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-info" id="IncomeModalSetDate" >Whole Period</button>
+                    <button type="button" class="btn btn-info" id="IncomeModalSetYear" >Whole Period</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-success" data-dismiss="modal" id="IncomeModalSave">Save
                     </button>
@@ -294,7 +298,7 @@
     </div>
 
     <!-- The Outgoings Section -->
-    <div class="col-sm-10 main-body border border-primary" id="OutgoingsDiv">
+    <div class="col-sm-10 main-body " id="OutgoingsDiv">
         <br/>
         <button id="btnOutgoingsAdd" type="button" class="btn btn-outline-primary">Add Outgoings <span
                 class="glyphicon glyphicon-plus"></span></button>
@@ -309,8 +313,8 @@
                 <th>Id</th>
                 <th>Outgoings Type</th>
                 <th>Outgoings Description</th>
-                <th>From Dated</th>
-                <th>To Date</th>
+                <th>From Yeard</th>
+                <th>To Year</th>
                 <th>Amount</th>
                 <th>Action</th>
             </tr>
@@ -321,8 +325,8 @@
                 <th>Id</th>
                 <th>Outgoings Type</th>
                 <th>Outgoings Description</th>
-                <th>From Dated</th>
-                <th>To Date</th>
+                <th>From Yeard</th>
+                <th>To Year</th>
                 <th>Amount</th>
                 <th>Action</th>
             </tr>
@@ -365,15 +369,15 @@
                     </div>
                 </div>
                 <div class="row">
-                    <label class="col-sm-2 control-label"> From Date</label>
+                    <label class="col-sm-2 control-label"> From Year</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="m_OutgoingsfromDate" value="0"/>
+                        <input type="text" class="form-control" id="m_OutgoingsfromYear" value="0"/>
                     </div>
                 </div>
                 <div class="row">
-                    <label class="col-sm-2 control-label"> To Date</label>
+                    <label class="col-sm-2 control-label"> To Year</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="m_OutgoingstoDate" value="0"/>
+                        <input type="text" class="form-control" id="m_OutgoingstoYear" value="0"/>
                     </div>
                 </div>
                 <div class="row">
@@ -386,7 +390,7 @@
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-info" id="OutgoingsModalSetDate" >Whole Period</button>
+                <button type="button" class="btn btn-info" id="OutgoingsModalSetYear" >Whole Period</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-success" data-dismiss="modal" id="OutgoingsModalSave">Save</button>
             </div>

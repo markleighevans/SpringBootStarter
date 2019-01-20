@@ -3,7 +3,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
 
 @Entity // This tells Hibernate to make a table out of this class
 
@@ -12,7 +11,7 @@ public class Projection {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
     private Integer AffordabilityCaseID;
-    private Date ProjectionDate;
+    private Integer ProjectionYear;
     private Double DefaultIncomeAmount;
     private Double Stress1IncomeAmount;
     private Double Stress2IncomeAmount;
@@ -21,10 +20,10 @@ public class Projection {
     private Double Stress1SurplusAmount;
     private Double Stress2SurplusAmount;
     
-    public Projection(Integer id,  Integer AffordabilityCaseID, Date ProjectionDate, Double DefaultIncomeAmount, Double Stress1IncomeAmount, Double Stress2IncomeAmount, Double OutgoingsAmount, Double DefaultSurplusAmount, Double Stress1SurplusAmount, Double Stress2SurplusAmount  ) {
+    public Projection(Integer id,  Integer AffordabilityCaseID, Integer ProjectionYear, Double DefaultIncomeAmount, Double Stress1IncomeAmount, Double Stress2IncomeAmount, Double OutgoingsAmount, Double DefaultSurplusAmount, Double Stress1SurplusAmount, Double Stress2SurplusAmount  ) {
         this.id = id;
         this.AffordabilityCaseID = AffordabilityCaseID;
-        this.ProjectionDate = ProjectionDate;
+        this.ProjectionYear = ProjectionYear;
         this.DefaultIncomeAmount = DefaultIncomeAmount;
         this.Stress1IncomeAmount = Stress1IncomeAmount;
         this.Stress2IncomeAmount = Stress2IncomeAmount;
@@ -45,7 +44,7 @@ public class Projection {
                 "id='" + id + '\'' +
                 "AffordabilityCaseID='" + AffordabilityCaseID + '\'' +
         "AffordabilityCaseID ='" + AffordabilityCaseID + '\'' +
-        "ProjectionDate ='" + ProjectionDate + '\'' +
+        "ProjectionYear ='" + ProjectionYear + '\'' +
         "DefaultIncome ='" + DefaultIncomeAmount + '\'' +
         "Stress1IncomeAmount ='" + Stress1IncomeAmount + '\'' +
         "Stress2IncomeAmount ='" + Stress2IncomeAmount + '\'' +
@@ -71,8 +70,8 @@ public class Projection {
         this.AffordabilityCaseID = AffordabilityCaseID;
     }
 
-    public Date getProjectionDate() {return ProjectionDate;}
-    public void setProjectionDate(Date ProjectionDate) { this.ProjectionDate = ProjectionDate;}
+    public Integer getProjectionYear() {return ProjectionYear;}
+    public void setProjectionYear(Integer ProjectionYear) { this.ProjectionYear = ProjectionYear;}
 
     public Double getDefaultIncomeAmount() {return DefaultIncomeAmount;}
     public void  setDefaultIncomeAmount(Double DefaultIncomeAmount) {this.DefaultIncomeAmount = DefaultIncomeAmount;}

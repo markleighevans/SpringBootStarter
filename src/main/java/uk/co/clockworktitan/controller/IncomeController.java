@@ -39,8 +39,9 @@ public class IncomeController {
         n.setIncomeTypeId(Income.getIncomeTypeId());
         n.setIncomeDescription(Income.getIncomeDescription());
         n.setStressOutcome(Income.getStressOutcome());
-        n.setFromDate(Income.getFromDate());
-        n.setToDate(Income.getToDate());
+        n.setIndexLinked(Income.getIndexLinked());
+        n.setFromYear(Income.getFromYear());
+        n.setToYear(Income.getToYear());
         n.setAmount(Income.getAmount());
         IncomeRepository.save(n);
 

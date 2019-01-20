@@ -16,7 +16,7 @@ var helpers =
                 if (emptyMessage == 'Select Income Type')
                 {
                       dropdown.append('<option value="' + v.id + '">' + v.incomeTypeName + '</option>');
-                      IncomeTypeList.push( [v.id, v.incomeTypeName, v.stressOutcome]  );
+                      IncomeTypeList.push( [v.id, v.incomeTypeName, v.stressOutcome, v.indexLinked]  );
                 }
                 else
                 {
@@ -35,6 +35,10 @@ function TableRefresh(TargetTable, resetpaging )
           console.log("table refresh")
 }
 
+function SetFormatOptions()
+{
+     ///
+}
 
 
     function convertToJSONDate(strDate){
@@ -103,11 +107,9 @@ function EditIncomeModal(IncomeID) {
                           $('#m_income_record-id').val(IncomeData.id);
                           $('#m_incomeDescription').val(IncomeData.incomeDescription);
                           $('#m_income_stressOutcome').val(IncomeData.stressOutcome);
-
-                          var fromDate = new Date(IncomeData.fromDate);
-                          var toDate = new Date(IncomeData.toDate);
-                           $('#m_income_fromDate').datepicker('setDate', fromDate);
-                          $('#m_income_toDate').datepicker('setDate', toDate);
+                           $('#m_indexLinked').attr('checked', IncomeData.indexLinked);
+                           $('#m_income_fromYear').val(IncomeData.fromYear);
+                          $('#m_income_toYear').val(IncomeData.toYear)
 
                           $('#m_income_amount').val(IncomeData.amount);
                           $('#m_IncomeType').prop('selectedIndex', IncomeData.incomeTypeId);
@@ -121,11 +123,11 @@ function EditOutgoingsModal(OutgoingsID) {
                        {
                           $('#m_Outgoingsrecord-id').val(OutgoingsData.id);
                           $('#m_OutgoingsDescription').val(OutgoingsData.outgoingsDescription);
-                          var fromDate = new Date(OutgoingsData.fromDate);
-                          var toDate = new Date(OutgoingsData.toDate);
+                          var fromYear = new Date(OutgoingsData.fromDate);
+                          var toYear = new Date(OutgoingsData.toDate);
 
-                          $('#m_OutgoingsfromDate').datepicker('setDate', fromDate);
-                          $('#m_OutgoingstoDate').datepicker('setDate', toDate);
+                          $('#m_OutgoingsfromYear').val(OutgoingsData.fromYear);
+                          $('#m_OutgoingstoYear').val(OutgoingsData.toYear);
 
                           $('#m_Outgoingsamount').val(OutgoingsData.amount);
                           $('#m_OutgoingsType').prop('selectedIndex', OutgoingsData.outgoingsTypeId);
@@ -139,13 +141,14 @@ function SaveIncome(){
         	// PREPARE FORM DATA
         	var formData = {
         		id : $("#m_income_record-id").val(),
-        		applicantNumber: $("#m_ApplicantNumber").val(),
+        		applicantNumber: $("#m_ApplicantNumber").prop('selectedIndex'),
         		affordabilityCaseID : $( "#m_affordability_record-id").val(),
         		incomeTypeId : $("#m_IncomeType").prop('selectedIndex'),
         		incomeDescription:  $("#m_incomeDescription").val(),
         		stressOutcome: $("#m_income_stressOutcome").val(),
-        		fromDate:   $("#m_income_fromDate").datepicker('getDate'),
-        		toDate:     $("#m_income_toDate").datepicker('getDate'),
+        		indexLinked: $("#m_indexLinked").is(':checked'),
+        		fromYear:   $("#m_income_fromYear").val(),
+        		toYear:     $("#m_income_toYear").val(),
         		amount:     $("#m_income_amount").val()
 
         	}
@@ -160,7 +163,7 @@ function SaveIncome(){
     			dataType : 'json',
     			success : function(data, status, jqXHR) {
     				//alert("Successfully posted"+ data);
-    				TableRefresh('#ProjectionTable', false);
+    				TableRefresh('#IncomeTable', false);
     			},
     			error: function (xhr, ajaxOptions, thrownError) {
                         alert(xhr.status);
@@ -180,8 +183,8 @@ function SaveIncome(){
                 		outgoingsTypeId : $("#m_OutgoingsType").prop('selectedIndex'),
                 		outgoingsDescription:  $("#m_OutgoingsDescription").val(),
                 		affordabilityCaseID : $( "#m_affordability_record-id").val(),
-                		fromDate:   $("#m_OutgoingsfromDate").datepicker('getDate'),
-                		toDate:     $("#m_OutgoingstoDate").datepicker('getDate'),
+                		fromYear:   $("#m_OutgoingsfromYear").val(),
+                		toYear:     $("#m_OutgoingstoYear").val(),
                 		amount:     $("#m_Outgoingsamount").val()
 
                 	}
@@ -211,11 +214,10 @@ function SaveIncome(){
 
  function CreateDefaultOutgoings(){
                 	// PREPARE FORM DATA
-                	console.log('CreateDefaultOutgoings: '+ $('#m_CaseFromDate').datepicker('getDate').getDate());
                 	var formData = {
                 		id : $( "#m_affordability_record-id").val(),
-                		fromDate:    $('#m_CaseFromDate').datepicker('getDate'),
-                        toDate:      $('#m_CaseToDate').datepicker('getDate')
+                		fromYear:    $('#m_CaseFromYear').val(),
+                        toYear:      $('#m_CaseToYear').val()
 
 
                 	}
@@ -245,17 +247,13 @@ function SaveIncome(){
 
 function CreateProjection(){
                 	// PREPARE FORM DATA
-                	console.log('CreateProjection: '+ $('#m_CaseFromDate').datepicker('getDate').getDate());
                 	var formData = {
                 		id : $( "#m_affordability_record-id").val(),
-                		fromDate:    $('#m_CaseFromDate').datepicker('getDate'),
-                        toDate:      $('#m_CaseToDate').datepicker('getDate')
-
-
+                		fromYear:    $('#m_CaseFromYear').val(),
+                        toYear:      $('#m_CaseToYear').val()
                 	}
 
                 	// DO POST
-                	console.log('Posting /Outgoings/add ' +  JSON.stringify(formData));
                 	$.ajax({
             			type : "POST",
             			contentType : "application/json",
@@ -264,7 +262,7 @@ function CreateProjection(){
             			dataType : 'json',
             			success : function(data, status, jqXHR) {
             				//alert("Successfully posted"+ data);
-            				PopulateProjectionTable('#ProjectionTable', false);
+            				TableRefresh('#ProjectionTable', false);
             			},
             			error: function (xhr, ajaxOptions, thrownError) {
                                 alert(xhr.status);
@@ -287,10 +285,12 @@ $.getJSON( '/AffordabilityCase/FindbyID/' +affordability_record_id , function(Ca
                           $('#m_Applicant_Count').val(CaseData.applicantCount);
                           $('#m_Applicant1Name').val(CaseData.applicant1Name);
                           $('#m_Applicant2Name').val(CaseData.applicant2Name);
-                          var fromDate = new Date(CaseData.fromDate);
-                          var toDate = new Date(CaseData.toDate);
-                          $('#m_CaseFromDate').datepicker('setDate',  fromDate);
-                          $('#m_CaseToDate').datepicker('setDate', toDate);
+                          $('#m_CaseFromYear').val(CaseData.fromYear);
+                          $('#m_CaseToYear').val(CaseData.toYear);
+                          // add a friendly label to the Applicant number dropdown
+                          $('#m_ApplicantNumber').append('<option value="' + 0 + '">' +  "Select Applicant" + '</option>');
+                          $('#m_ApplicantNumber').append('<option value="' + 1 + '">' +  CaseData.applicant1Name + '</option>');
+                          $('#m_ApplicantNumber').append('<option value="' + 2 + '">' +  CaseData.applicant2Name + '</option>');
 
                        });
        };
@@ -347,17 +347,9 @@ function PopulateIncomeTable(affordability_record_id)
 		            },
 				    { "mData": "incomeDescription" },
 				    { "mData": "stressOutcome" },
-				    { "data": null,
-                      				        "render": function(data) {
-                      				                 var LongDate = new Date(data.fromDate);
-                      				                 return LongDate.toLocaleDateString();
-                      				                 } },
-				    {  "data": null,
-				        "render": function(data) {
-				                 var LongDate = new Date(data.toDate);
-				                 return LongDate.toLocaleDateString();
-				                 }
-				    },
+				    { "mData": "indexLinked" },
+				    { "mData": "fromYear" },
+				    {  "mData": "toYear" },
 				    { "mData": "amount",
 				    render: $.fn.dataTable.render.number( ',', '.', 2, '£' )
 				    },
@@ -408,17 +400,8 @@ function PopulateOutgoingsTable (affordability_record_id)
  		                    }
  		            },
  				    { "mData": "outgoingsDescription" },
- 				    { "data": null,
-                       				        "render": function(data) {
-                       				                 var LongDate = new Date(data.fromDate);
-                       				                 return LongDate.toLocaleDateString();
-                       				                 } },
- 				    {  "data": null,
- 				        "render": function(data) {
- 				                 var LongDate = new Date(data.toDate);
- 				                 return LongDate.toLocaleDateString();
- 				                 }
- 				    },
+ 				    { "mData": "fromYear" },
+ 				    { "mData": "toYear" },
  				    { "mData": "amount" ,
  				    render: $.fn.dataTable.render.number( ',', '.', 2, '£' )
  				    },
@@ -448,7 +431,7 @@ function PopulateProjectionTable(affordability_record_id)
 			"order": [[ 0, "asc" ]],
 			"aoColumns": [
 			        { "mData": "id"},
-			        { "mData":  "projectionDate"},
+			        { "mData":  "projectionYear"},
                     { "mData": "defaultIncomeAmount",
 				    render: $.fn.dataTable.render.number( ',', '.', 2, '£' )
 				    },
@@ -513,57 +496,14 @@ function CreateNewCase(){
 
 
 
-/////////////////// $(document).ready( function () //////////////////////////////////////////
+////////////////////////////////////////////////// $(document).ready( function () ////////////////////////////////////////////////////////////////////////////////////////////////////////
 $(document).ready( function () {
     $("#IncomeModal").modal('hide');
     $("#OutgoingsModal").modal('hide');
+SetFormatOptions();
 
-
-
-$('#m_CaseFromDate').datepicker();
-$('#m_CaseToDate').datepicker();
-$('#m_income_fromDate').datepicker();
-$('#m_income_toDate').datepicker();
-$('#m_OutgoingsfromDate').datepicker();
-$('#m_OutgoingstoDate').datepicker();
-
-$('#m_CaseFromDate').datepicker().datepicker('option', 'dateFormat', 'dd/mm/yy');
-$('#m_CaseToDate').datepicker().datepicker('option', 'dateFormat', 'dd/mm/yy');
-
-$('#m_income_fromDate').datepicker('option', 'dateFormat', 'dd/mm/yy');
-$('#m_income_toDate').datepicker('option', 'dateFormat', 'dd/mm/yy');
-
-$('#m_OutgoingsfromDate').datepicker('option', 'dateFormat', 'dd/mm/yy');
-$('#m_OutgoingstoDate').datepicker('option', 'dateFormat', 'dd/mm/yy');
 
 var affordability_record_id =  sessionStorage.getItem('affordability_record_id');
-$('#m_CaseFromDate').datepicker({
-                                  changeMonth: true,
-                                  changeYear: true
-                                });
-$('#m_CaseToDate').datepicker({
-                                  changeMonth: true,
-                                  changeYear: true,
-                                });
-$('#m_income_fromDate').datepicker({
-                                  changeMonth: true,
-                                  changeYear: true
-                                });
-
-
-$('#m_income_toDate').datepicker({
-                                changeMonth: true,
-                                changeYear: true
-                              });
-$('#m_OutgoingsfromDate').datepicker({
-                                changeMonth: true,
-                                changeYear: true
-                              });
-$('#m_OutgoingstoDate').datepicker({
-                              changeMonth: true,
-                              changeYear: true
-                            });
-
 
 // Get the list of Income Types and populate the drop down and client array
 	 $.ajax({
@@ -602,10 +542,12 @@ $('#m_OutgoingstoDate').datepicker({
                                                   if (NewIncomeTypeID == IncomeTypeList[i][0])
                                                   {
                                                       StressOutcomeValue = IncomeTypeList[i][2];
+                                                      IndexLinked = IncomeTypeList[i][3];
                                                   }
 
                                               }
         $('#m_income_stressOutcome').val(StressOutcomeValue);
+        $('#m_indexLinked').attr('checked', IndexLinked);
 
      });
        $('#IncomeDiv').show();
@@ -666,15 +608,15 @@ $('#IncomeModalSave').click( function () {
         } );
 
 
-    $('#IncomeModalSetDate').click( function () {
-             $('#m_income_fromDate').datepicker('setDate', $('#m_CaseFromDate').datepicker('getDate'));
-             $('#m_income_toDate').datepicker('setDate', $('#m_CaseToDate').datepicker('getDate'));
+    $('#IncomeModalSetYear').click( function () {
+             $('#m_income_fromYear').val( $('#m_CaseFromYear').val());
+             $('#m_income_toYear').val( $('#m_CaseToYear').val());
 
         } );
 
   $('#OutgoingsModalSetDate').click( function () {
-             $('#m_OutgoingsfromDate').val($('#m_CaseFromDate').val());
-             $('#m_OutgoingstoDate').val($('#m_CaseToDate').val());
+             $('#m_OutgoingsfromYear').val($('#m_CaseFromYear').val());
+             $('#m_OutgoingstoYear').val($('#m_CaseToYear').val());
 
         } );
 
@@ -686,10 +628,10 @@ $('#btnIncomeAdd').click ( function()
      $('#m_incomeTypeId').val("");
      $('#m_incomeDescription').val("");
      $('#m_income_stressOutcome').val("");
-     $('#m_income_fromDate').val("");
-     $('#m_income_toDate').val("");
+     $('#m_income_fromYear').val("");
+     $('#m_income_toYear').val("");
      $('#m_income_amount').val("");
-
+     $('#m_indexLinked').attr('checked', true);
      $("#IncomeModal").modal('show');
 
     }
@@ -701,8 +643,8 @@ $('#btnOutgoingsAdd').click ( function()
      $('#m_Outgoingsrecord-id').val("");
      $('#m_OutgoingsTypeId').val("");
      $('#m_OutgoingsDescription').val("");
-     $('#m_OutgoingsfromDate').val("");
-     $('#m_OutgoingstoDate').val("");
+     $('#m_OutgoingsfromYear').val("");
+     $('#m_OutgoingstoYear').val("");
      $('#m_Outgoingsamount').val("");
 
      $("#OutgoingsModal").modal('show');

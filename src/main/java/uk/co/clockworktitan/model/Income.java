@@ -1,13 +1,20 @@
 package uk.co.clockworktitan.model;
+import org.springframework.beans.factory.annotation.Autowired;
+import uk.co.clockworktitan.IncomeRepository;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
+
+
 
 @Entity // This tells Hibernate to make a table out of this class
 
+// us
+
 public class Income {
+
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
@@ -16,18 +23,20 @@ public class Income {
     private Integer IncomeTypeId;
     private String  IncomeDescription;
     private Integer StressOutcome;
-    private Date FromDate;
-    private Date ToDate;
+    private Boolean IndexLinked;
+    private Integer FromYear;
+    private Integer ToYear;
     private Double Amount;
 
-    public Income(Integer IncomeTypeId, Integer AffordabilityCaseID, Integer ApplicantNumber, String  IncomeDescription, Integer StressOutcome,  Date FromDate, Date ToDate, Double Amount) {
+    public Income(Integer IncomeTypeId, Integer AffordabilityCaseID, Integer ApplicantNumber, String  IncomeDescription, Integer StressOutcome, Boolean IndexLinked,  Integer FromYear, Integer ToYear, Double Amount) {
         this.IncomeTypeId = IncomeTypeId;
         this.AffordabilityCaseID = AffordabilityCaseID;
         this.ApplicantNumber = ApplicantNumber;
         this.IncomeDescription = IncomeDescription;
         this.StressOutcome = StressOutcome;
-        this.FromDate = FromDate;
-        this.ToDate = ToDate;
+        this.IndexLinked = IndexLinked;
+        this.FromYear = FromYear;
+        this.ToYear = ToYear;
         this.Amount = Amount;
     }
 
@@ -44,8 +53,9 @@ public class Income {
                 ", IncomeTypeId='" + IncomeTypeId + '\'' +
                 ", IncomeDescription='" + IncomeDescription + '\'' +
                 ", StressOutcome='" + StressOutcome + '\'' +
-                ", FromDate='" + FromDate + '\'' +
-                ", ToDate='" + ToDate + '\'' +
+                ", IndexLinked='" + IndexLinked + '\'' +
+                ", FromYear='" + FromYear + '\'' +
+                ", ToYear='" + ToYear + '\'' +
                 ", Amount='" + Amount + '\'' +
 
                 '}';
@@ -97,21 +107,29 @@ public class Income {
     }
 
 
-    public Date getFromDate() {
-        return FromDate;
+    public Boolean getIndexLinked() {
+        return IndexLinked;
     }
-    public void setFromDate(Date FromDate) {
-        this.FromDate = FromDate;
+    public void setIndexLinked(Boolean IndexLinked) {
+        this.IndexLinked = IndexLinked;
     }
 
-    public Date getToDate() {
-        return ToDate;
+    public Integer getFromYear() {
+        return FromYear;
     }
-    public void setToDate(Date ToDate) {
-        this.ToDate = ToDate;
+    public void setFromYear(Integer FromYear) {
+        this.FromYear = FromYear;
+    }
+
+    public Integer getToYear() {
+        return ToYear;
+    }
+    public void setToYear(Integer ToYear) {
+        this.ToYear = ToYear;
     }
 
     public Double getAmount() {return Amount;}
     public void  setAmount(Double Amount) {this.Amount = Amount;}
+
 
 }

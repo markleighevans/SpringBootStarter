@@ -111,7 +111,7 @@ public class AffordabilityCaseController {
             Integer iteratorYear = CaseRecord.getFromYear();
 
             while (iteratorYear <= CaseRecord.getToYear()) {
-                getInflationBetweenYears(CaseRecord.getFromYear(), iteratorYear);
+                getInflationBetweenYears(CaseRecord.getFromYear()+1, iteratorYear);
                 Projection CaseProjection = new Projection();
                 Double DefaultIncomeForYear = getDefaultIncomeForYear(_AffordabilityCase.getId(), iteratorYear);
                 Double OutgoingsAmountForYear = getOutgoingsForYear(_AffordabilityCase.getId(), iteratorYear);
@@ -170,7 +170,13 @@ public class AffordabilityCaseController {
             {
                 Income IncomeRecord = _IncomeIterator.next();
                 System.out.println("Iterating Income Set");
-                ReturnAmount = ReturnAmount + IncomeRecord.getAmount();
+                if (IncomeRecord.getIndexLinked()==true)
+                {
+                    ReturnAmount = ReturnAmount + (IncomeRecord.getAmount()* getInflationBetweenYears(IncomeRecord.getFromYear(), ProjectionYear));
+                }
+                else
+                {ReturnAmount = ReturnAmount + IncomeRecord.getAmount(); }
+
                 //TODO add weighting into calculation
 
             }

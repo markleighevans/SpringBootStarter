@@ -197,7 +197,7 @@ public class AffordabilityCaseController {
         Integer YearIterator = StartYear;
         Double YearAmount = 0.0;
         Double TotalAmount = 1.0;
-        while (YearIterator < EndYear )
+        while (YearIterator <= EndYear )
         {
             ////////////////////////////////////////////////////////
             Iterable <Inflation> _Inflation  = _InflationRepository.findAllByInflationYear( YearIterator);
@@ -210,7 +210,7 @@ public class AffordabilityCaseController {
                 //TODO - this will return the wrong value in the event of duplicate records (need to set constraints on table)
 
             }
-            System.out.println("YearAmount" + YearAmount);
+            System.out.println("Year: "+ YearIterator + " YearAmount: " + YearAmount);
 
             TotalAmount = TotalAmount+ ((YearAmount/100) * TotalAmount);
             ///////////////////////////////////////////////////////

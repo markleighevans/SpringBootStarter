@@ -625,13 +625,15 @@ $('#btnIncomeAdd').click ( function()
     {
     // Clear the existing data then show the modal
      $('#m_income_record-id').val("");
-     $('#m_incomeTypeId').val("");
+     $('#m_incomeType').val(0);
      $('#m_incomeDescription').val("");
+     $('#m_ApplicantNumber').val(0);
      $('#m_income_stressOutcome').val("");
      $('#m_income_fromYear').val("");
      $('#m_income_toYear').val("");
      $('#m_income_amount').val("");
      $('#m_indexLinked').attr('checked', true);
+
      $("#IncomeModal").modal('show');
 
     }

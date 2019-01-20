@@ -1,11 +1,11 @@
 package uk.co.clockworktitan.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity // This tells Hibernate to make a table out of this class
+@Table(uniqueConstraints={
+        @UniqueConstraint(columnNames = {"inflationYear"})
+})
 
 public class Inflation {
     @Id

@@ -74,16 +74,16 @@ INSERT INTO inflation (inflation_year, inflation) VALUES (2056, 2.5);
 INSERT INTO inflation (inflation_year, inflation) VALUES (2057, 2.5);
 INSERT INTO inflation (inflation_year, inflation) VALUES (2058, 2.5);
 INSERT INTO inflation (inflation_year, inflation) VALUES (2059, 2.5);
-INSERT INTO inflation (inflation_year, inflation) VALUES (2030, 2.5);
-INSERT INTO inflation (inflation_year, inflation) VALUES (2031, 2.5);
-INSERT INTO inflation (inflation_year, inflation) VALUES (2032, 2.5);
-INSERT INTO inflation (inflation_year, inflation) VALUES (2033, 2.5);
-INSERT INTO inflation (inflation_year, inflation) VALUES (2034, 2.5);
-INSERT INTO inflation (inflation_year, inflation) VALUES (2035, 2.5);
-INSERT INTO inflation (inflation_year, inflation) VALUES (2036, 2.5);
-INSERT INTO inflation (inflation_year, inflation) VALUES (2037, 2.5);
-INSERT INTO inflation (inflation_year, inflation) VALUES (2038, 2.5);
-INSERT INTO inflation (inflation_year, inflation) VALUES (2039, 2.5);
+INSERT INTO inflation (inflation_year, inflation) VALUES (2060, 2.5);
+INSERT INTO inflation (inflation_year, inflation) VALUES (2061, 2.5);
+INSERT INTO inflation (inflation_year, inflation) VALUES (2062, 2.5);
+INSERT INTO inflation (inflation_year, inflation) VALUES (2063, 2.5);
+INSERT INTO inflation (inflation_year, inflation) VALUES (2064, 2.5);
+INSERT INTO inflation (inflation_year, inflation) VALUES (2065, 2.5);
+INSERT INTO inflation (inflation_year, inflation) VALUES (2066, 2.5);
+INSERT INTO inflation (inflation_year, inflation) VALUES (2067, 2.5);
+INSERT INTO inflation (inflation_year, inflation) VALUES (2068, 2.5);
+INSERT INTO inflation (inflation_year, inflation) VALUES (2069, 2.5);
 
 
 

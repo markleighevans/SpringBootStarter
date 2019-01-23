@@ -29,7 +29,8 @@ public class AffordabilityCaseController {
     private OutgoingsRepository _OutgoingsRepository;
     @Autowired
     private InflationRepository  _InflationRepository;
-
+    private Inflation       _Inflation;
+    private Inflation[] _InflationList;
 
     //@GetMapping(path="/add") // Map ONLY GET Requests
     @PostMapping(path="/add")
@@ -172,7 +173,7 @@ public class AffordabilityCaseController {
                 System.out.println("Iterating Income Set");
                 if (IncomeRecord.getIndexLinked()==true)
                 {
-                    ReturnAmount = ReturnAmount + (IncomeRecord.getAmount()* getInflationBetweenYears(IncomeRecord.getFromYear(), ProjectionYear));
+                    ReturnAmount = ReturnAmount + (IncomeRecord.getAmount()* getInflationBetweenYears(IncomeRecord.getFromYear()+1, ProjectionYear));
                 }
                 else
                 {ReturnAmount = ReturnAmount + IncomeRecord.getAmount(); }
@@ -180,6 +181,7 @@ public class AffordabilityCaseController {
                 //TODO add weighting into calculation
 
             }
+       this.populateInflationData();;
 
         return ReturnAmount;
     }
@@ -192,9 +194,10 @@ public class AffordabilityCaseController {
         {
             Outgoings OutgoingsRecord = _OutgoimgsIterator.next();
             System.out.println("Iterating Outgoings Set");
-            ReturnAmount = ReturnAmount + OutgoingsRecord.getAmount();
+            ReturnAmount = ReturnAmount + (OutgoingsRecord.getAmount()* getInflationBetweenYears(OutgoingsRecord.getFromYear()+1, ProjectionYear) );
 
         }
+
 
         return ReturnAmount;
     }
@@ -216,14 +219,73 @@ public class AffordabilityCaseController {
                 //TODO - this will return the wrong value in the event of duplicate records (need to set constraints on table)
 
             }
-            System.out.println("Year: "+ YearIterator + " YearAmount: " + YearAmount);
+            //System.out.println("Year: "+ YearIterator + " YearAmount: " + YearAmount);
 
             TotalAmount = TotalAmount+ ((YearAmount/100) * TotalAmount);
             ///////////////////////////////////////////////////////
             YearIterator++;
         }
+
         System.out.println("Total Inflation Between Years"+ StartYear + " - " + EndYear + "=" + TotalAmount);
 
         return TotalAmount;
+    }
+
+    private Double SF_getInflationBetweenYears(Integer  StartYear, Integer EndYear)
+    {
+        Integer YearIterator = StartYear;
+        Double YearAmount = 0.0;
+        Double TotalAmount = 1.0;
+        while (YearIterator <= EndYear )
+        {
+            ////////////////////////////////////////////////////////
+            //////Iterable <Inflation> _Inflation  = _InflationRepository.findAllByInflationYear( YearIterator);
+            ///Iterator<Inflation>  _InflationIterator = _Inflation.iterator();
+            _InflationList.
+            YearAmount = 0.0;
+            while (_InflationIterator.hasNext())
+            {
+                Inflation InflationRecord = _InflationIterator.next();
+                YearAmount = YearAmount + InflationRecord.getinflation();
+                //TODO - this will return the wrong value in the event of duplicate records (need to set constraints on table)
+
+            }
+            //System.out.println("Year: "+ YearIterator + " YearAmount: " + YearAmount);
+
+            TotalAmount = TotalAmount+ ((YearAmount/100) * TotalAmount);
+            ///////////////////////////////////////////////////////
+            YearIterator++;
+        }
+
+        System.out.println("Total Inflation Between Years"+ StartYear + " - " + EndYear + "=" + TotalAmount);
+
+        return TotalAmount;
+    }
+
+    private void populateInflationData()
+    {
+        List <Inflation> tinker;
+        Iterable <Inflation> _Inflation  = _InflationRepository.findAll();
+        Iterator<Inflation> _InflationIterator = _Inflation.iterator();
+        Integer Counter =0;
+        _InflationList = new Inflation[Math.toIntExact(_InflationRepository.count()) ];
+        tinker = new < List> Inflation();
+        while (_InflationIterator.hasNext())
+        {
+         Inflation InflationRecord = _InflationIterator.next();
+         _InflationList[Counter] = new Inflation(InflationRecord.getinflationYear() , InflationRecord.getinflation());
+         tinker.add(Counter,  InflationRecord);
+          // this._InflationList[Counter].setinflation(InflationRecord.getinflation  ());
+        System.out.println("Populate called");
+        Counter++;
+
+        }
+        Counter = 0;
+        while (Counter < _InflationList.length)
+        {
+            System.out.println(_InflationList[Counter].toString());
+            Counter++;
+        }
+
     }
 }

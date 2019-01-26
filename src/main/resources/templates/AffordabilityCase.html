@@ -117,101 +117,142 @@
         </div>
         <br/>
         <div class="row"></div>
-        <button id="btnIncome" type="button" class="btn btn-outline-primary">Income <span
-                class="glyphicon glyphicon-plus"></span>
-        </button>
-        <button id="btnOutgoings" type="button" class="btn btn-outline-primary">Outgoings <span
-                class="glyphicon glyphicon-minus"></span>
-        </button>
-        <button id="btnProjection" type="button" class="btn btn-outline-primary">Projection <span
-                class="glyphicon glyphicon-dashboard"></span>
-        </button>
+
         <div class="row">
             </div>
+        <div id="tabs">
+            <ul class="tabs">
+                <li id="firstTabSelector"><a href="#IncomeTab">Income</a></li>
+                <li id="secondTabSelector"><a href="#OutgoingsTab">Outgoings</a></li>
+                <li id="thirdTabSelector"><a href="#ProjectionTab">Projection</a></li>
+            </ul>
+            <div id="IncomeTab">
+                Income
+                    <br/>
+                    <button id="btnIncomeAdd" type="button" class="btn btn-outline-primary"><span
+                            class="glyphicon glyphicon-plus"></span>
+                        Add Income
+                    </button>
+                    <br/>
+                <br/>
+                    <div class="row"></div>
+                    <table id="IncomeTable" class=" compact table table-striped table-bordered" style="width:100%">
+                        <!-- Header Table -->
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Applicant Number</th>
+                            <th>Income Type</th>
+                            <th>Income Description</th>
+                            <th>Stress Outcome</th>
+                            <th>Index Linked </th>
+                            <th>From Year</th>
+                            <th>To Year</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <!-- Footer Table -->
+                        <tfoot>
+                        <tr>
+                            <th>Id</th>
+                            <th>Applicant Number</th>
+                            <th>Income Type</th>
+                            <th>Income Description</th>
+                            <th>Stress Outcome</th>
+                            <th>Index Linked </th>
+                            <th>From Year</th>
+                            <th>To Year</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+            </div>
+            <div id="OutgoingsTab">
+                Outgoings
+                    <br/>
+                    <button id="btnOutgoingsAdd" type="button" class="btn btn-outline-primary">Add Outgoings <span
+                            class="glyphicon glyphicon-plus"></span></button>
+                    <button id="btnDefaultOutgoings" type="button" class="btn btn-outline-primary">Add Default Outgoings <span
+                            class="glyphicon glyphicon-plus"></span></button>
+                    <br/>
+                    <div class="row"></div>
+                    <br/>
+                    <table id="OutgoingsTable" class=" table compact table-striped table-bordered" style="width:100%">
+                        <!-- Header Table -->
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Outgoings Type</th>
+                            <th>Outgoings Description</th>
+                            <th>From Year</th>
+                            <th>To Year</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <!-- Footer Table -->
+                        <tfoot>
+                        <tr>
+                            <th>Id</th>
+                            <th>Outgoings Type</th>
+                            <th>Outgoings Description</th>
+                            <th>From Year</th>
+                            <th>To Year</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                        </tfoot>
+                    </table>
 
-        <div class="main-body col-sm-10 " id="ProjectionDiv">
-            <br/>
-            <button id="btnCreatProjection" type="button" class="btn btn-outline-primary"><span
-                    class="glyphicon glyphicon-plus"></span>
-                Create Projection
-            </button>
-            <br/>
-            <table id="ProjectionTable" class=" compact table table-striped table-bordered" style="width:100%">
-                <!-- Header Table -->
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Year</th>
-                    <th>Deafult Income </th>
-                    <th>Stress 1 Income </th>
-                    <th>Stress 2 Income </th>
-                    <th>Outgoings  </th>
-                    <th>Default Surplus</th>
-                    <th>Stress 1 Surplus</th>
-                    <th>Stress 2 Surplus</th>
-                </tr>
-                </thead>
-                <!-- Footer Table -->
-                <tfoot>
-                <tr>
-                    <th>Id</th>
-                    <th>Year</th>
-                    <th>Deafult Income </th>
-                    <th>Stress 1 Income </th>
-                    <th>Stress 2 Income </th>
-                    <th>Outgoings</th>
-                    <th>Default Surplus</th>
-                    <th>Stress 1 Surplus</th>
-                    <th>Stress 2 Surplus</th>
-                </tr>
-                </tfoot>
-            </table>
-            <div class="row"></div>
 
+
+            </div>
+            <div id="ProjectionTab">
+                Projection
+                    <br/>
+                    <button id="btnCreatProjection" type="button" class="btn btn-outline-primary"><span
+                            class="glyphicon glyphicon-plus"></span>
+                        Create Projection
+                    </button>
+                <br/>
+                    <br/>
+                    <table id="ProjectionTable" class=" compact table table-striped table-bordered" style="width:100%">
+                        <!-- Header Table -->
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Year</th>
+                            <th>Default Income </th>
+                            <th>Stress 1 Income </th>
+                            <th>Stress 2 Income </th>
+                            <th>Outgoings  </th>
+                            <th>Default Surplus</th>
+                            <th>Stress 1 Surplus</th>
+                            <th>Stress 2 Surplus</th>
+                        </tr>
+                        </thead>
+                        <!-- Footer Table -->
+                        <tfoot>
+                        <tr>
+                            <th>Id</th>
+                            <th>Year</th>
+                            <th>Default Income </th>
+                            <th>Stress 1 Income </th>
+                            <th>Stress 2 Income </th>
+                            <th>Outgoings</th>
+                            <th>Default Surplus</th>
+                            <th>Stress 1 Surplus</th>
+                            <th>Stress 2 Surplus</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                    <div class="row"></div>
+            </div>
         </div>
-        <div class="main-body col-sm-10 " id="IncomeDiv">
-            <br/>
-            <button id="btnIncomeAdd" type="button" class="btn btn-outline-primary"><span
-                    class="glyphicon glyphicon-plus"></span>
-                Add Income
-            </button>
-            <br/>
-            <div class="row"></div>
-            <table id="IncomeTable" class=" compact table table-striped table-bordered" style="width:100%">
-                <!-- Header Table -->
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Applicant Number</th>
-                    <th>Income Type</th>
-                    <th>Income Description</th>
-                    <th>Stress Outcome</th>
-                    <th>Index Linked </th>
-                    <th>From Year</th>
-                    <th>To Year</th>
-                    <th>Amount</th>
-                    <th>Action</th>
 
 
-                </tr>
-                </thead>
-                <!-- Footer Table -->
-                <tfoot>
-                <tr>
-                    <th>Id</th>
-                    <th>Applicant Number</th>
-                    <th>Income Type</th>
-                    <th>Income Description</th>
-                    <th>Stress Outcome</th>
-                    <th>Index Linked </th>
-                    <th>From Year</th>
-                    <th>To Year</th>
-                    <th>Amount</th>
-                    <th>Action</th>
-                </tr>
-                </tfoot>
-            </table>
-        </div>
     </div>
 
     <!-- The Income Modal -->
@@ -243,7 +284,7 @@
                     <div class="row">
                         <label class="col-sm-2 control-label">Income Type</label>
                         <div class="col-sm-4">
-                            <select class="form-control" id="m_IncomeType"></select>
+                            <select class="form-control" id="m_incomeType"></select>
                         </div>
                     </div>
                     <div class="row">
@@ -298,42 +339,6 @@
     </div>
 
     <!-- The Outgoings Section -->
-    <div class="col-sm-10 main-body " id="OutgoingsDiv">
-        <br/>
-        <button id="btnOutgoingsAdd" type="button" class="btn btn-outline-primary">Add Outgoings <span
-                class="glyphicon glyphicon-plus"></span></button>
-        <button id="btnDefaultOutgoings" type="button" class="btn btn-outline-primary">Add Default Outgoings <span
-                class="glyphicon glyphicon-plus"></span></button>
-        <br/>
-        <div class="row"></div>
-        <table id="OutgoingsTable" class=" table compact table-striped table-bordered" style="width:100%">
-            <!-- Header Table -->
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Outgoings Type</th>
-                <th>Outgoings Description</th>
-                <th>From Yeard</th>
-                <th>To Year</th>
-                <th>Amount</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <!-- Footer Table -->
-            <tfoot>
-            <tr>
-                <th>Id</th>
-                <th>Outgoings Type</th>
-                <th>Outgoings Description</th>
-                <th>From Yeard</th>
-                <th>To Year</th>
-                <th>Amount</th>
-                <th>Action</th>
-            </tr>
-            </tfoot>
-        </table>
-        .col-sm-6
-    </div>
 
 
 </div>

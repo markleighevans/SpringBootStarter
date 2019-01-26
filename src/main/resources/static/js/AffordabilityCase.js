@@ -38,6 +38,7 @@ function TableRefresh(TargetTable, resetpaging )
 function SetFormatOptions()
 {
      ///
+     $('.tabs').css('height','auto');
 }
 
 
@@ -112,7 +113,7 @@ function EditIncomeModal(IncomeID) {
                           $('#m_income_toYear').val(IncomeData.toYear)
 
                           $('#m_income_amount').val(IncomeData.amount);
-                          $('#m_IncomeType').prop('selectedIndex', IncomeData.incomeTypeId);
+                          $('#m_incomeType').prop('selectedIndex', IncomeData.incomeTypeId);
                            $("#IncomeModal").modal('show');
                        });
        }
@@ -143,7 +144,7 @@ function SaveIncome(){
         		id : $("#m_income_record-id").val(),
         		applicantNumber: $("#m_ApplicantNumber").prop('selectedIndex'),
         		affordabilityCaseID : $( "#m_affordability_record-id").val(),
-        		incomeTypeId : $("#m_IncomeType").prop('selectedIndex'),
+        		incomeTypeId : $("#m_incomeType").prop('selectedIndex'),
         		incomeDescription:  $("#m_incomeDescription").val(),
         		stressOutcome: $("#m_income_stressOutcome").val(),
         		indexLinked: $("#m_indexLinked").is(':checked'),
@@ -498,9 +499,18 @@ function CreateNewCase(){
 
 ////////////////////////////////////////////////// $(document).ready( function () ////////////////////////////////////////////////////////////////////////////////////////////////////////
 $(document).ready( function () {
-    $("#IncomeModal").modal('hide');
-    $("#OutgoingsModal").modal('hide');
+ $("#IncomeModal").modal('hide');
+ $("#OutgoingsModal").modal('hide');
 SetFormatOptions();
+$("#tabs").tabs();
+
+function selectTab(tabName) {
+    $("#tabs").tabs("option", "active", $(tabName + "Selector").index());
+}
+
+selectTab("#secondTab");
+
+setTimeout(function() {selectTab("#firstTab");}, 500);
 
 
 var affordability_record_id =  sessionStorage.getItem('affordability_record_id');
@@ -514,7 +524,7 @@ var affordability_record_id =  sessionStorage.getItem('affordability_record_id')
                     // console.log(JSON.parse(data));
                      helpers.buildDropdown(
                         data,
-                        $('#m_IncomeType'),
+                        $('#m_incomeType'),
                          'Select Income Type'
                      );
                  }
@@ -534,9 +544,9 @@ var affordability_record_id =  sessionStorage.getItem('affordability_record_id')
              });
 
       //// update the stress outcome if the Income Type Changes
-	 $('#m_IncomeType').on('change', function() {
-      var NewIncomeTypeID = $("#m_IncomeType").prop('selectedIndex');
-      console.log('m_IncomeType Change, NewIncomeTypeID=' + NewIncomeTypeID)
+	 $('#m_incomeType').on('change', function() {
+      var NewIncomeTypeID = $("#m_incomeType").prop('selectedIndex');
+      console.log('m_incomeType Change, NewIncomeTypeID=' + NewIncomeTypeID)
       for (var i=0, len=IncomeTypeList.length; i<len; i++)
                                               {
                                                   if (NewIncomeTypeID == IncomeTypeList[i][0])
@@ -550,9 +560,6 @@ var affordability_record_id =  sessionStorage.getItem('affordability_record_id')
         $('#m_indexLinked').attr('checked', IndexLinked);
 
      });
-       $('#IncomeDiv').show();
-       $('#OutgoingsDiv').hide();
-       $('#ProjectionDiv').hide();
 
 
 PopulateCaseData (affordability_record_id);

@@ -2,7 +2,9 @@ package uk.co.clockworktitan.model;
 import org.springframework.beans.factory.annotation.Autowired;
 import uk.co.clockworktitan.*;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 @Entity // This tells Hibernate to make a table out of this class
 @Table(uniqueConstraints={
@@ -17,7 +19,7 @@ public class Inflation {
     @Id
     private Integer inflationYear;
     private Double inflation;
-    private Inflation[] _InflationList;
+    //private List <Inflation> _InflationList;
 
     public Inflation( Integer inflationYear, Double inflation) {
         //this.id = ID;
@@ -31,7 +33,7 @@ public class Inflation {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Inflation{" +
                 "inflationYear='" + inflationYear + '\'' +
                 ", inflation='" + inflation + '\'' +
                 '}';
@@ -78,23 +80,7 @@ public class Inflation {
         return TotalAmount;
     }
 
-    public  void  populateInflation()
-    {
-
-        Iterable <Inflation> _Inflation  = _InflationRepository.findAll();
-        //Iterator<Inflation> _InflationIterator = _Inflation.iterator();
-        //Integer Counter =0;
-        //while (_InflationIterator.hasNext())
-        //{
-         // Inflation InflationRecord = _InflationIterator.next();
-           // this._InflationList[Counter] = new Inflation();
-          //this._InflationList[Counter].setinflation(InflationRecord.getinflation  ());
-        System.out.println("Populate called");
-        //Counter++;
-
-        //}
-
-    }
 
 
 }
+

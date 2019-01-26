@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="CostModel" />
         <module name="Spring-boot-example" />
         <module name="Springbootexample" />
         <module name="SpringBootStarter" />

@@ -391,6 +391,18 @@ function CreateNewCase(){
 
 
 $(document).ready( function () {
+    jQuery('.tabs .tab-links a').on('click', function(e) {
+    		var currentAttrValue = jQuery(this).attr('href');
+
+    		// Show/Hide Tabs
+    		jQuery('.tabs ' + currentAttrValue).show().siblings().hide();
+
+    		// Change/remove current tab to active
+    		jQuery(this).parent('li').addClass('active').siblings().removeClass('active');
+
+    		e.preventDefault();
+    	});
+
     $("#IncomeModal").modal('hide');
 
 var affordability_record_id =  1;
@@ -478,8 +490,6 @@ $('#m_income_toDate').datepicker({
         $('#m_income_stressOutcome').val(StressOutcomeValue);
 
      });
-       $('#IncomeDiv').show();
-                 $('#OutgoingsDiv').hide();
 
 PopulateCaseData (affordability_record_id);
 PopulateOutgoingsTable(affordability_record_id);

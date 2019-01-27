@@ -32,7 +32,14 @@ var helpers =
 function TableRefresh(TargetTable, resetpaging )
 {
        $(TargetTable).DataTable().ajax.reload(null, resetpaging);
-          console.log("table refresh")
+          console.log("table refresh");
+
+        var table = $('#ProjectionTable').DataTable()
+          table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+                  var cell = table.cell({ row: rowIdx, column: 5 }).node();
+                  console.log("iterating table format")
+                  $(cell).addClass('warning');
+              });
 }
 
 function SetFormatOptions()
@@ -446,18 +453,46 @@ function PopulateProjectionTable(affordability_record_id)
    				     { "mData": "outgoingsAmount",
                                         render: $.fn.dataTable.render.number( ',', '.', 2, '£' )
                        				    },
-  { "mData": "defaultSurplusAmount",
-                                        render: $.fn.dataTable.render.number( ',', '.', 2, '£' )
-                       				    },
- { "mData": "stress1SurplusAmount",
-                    render: $.fn.dataTable.render.number( ',', '.', 2, '£' )
-   				    },
-{ "mData": "stress2SurplusAmount",
-                    render: $.fn.dataTable.render.number( ',', '.', 2, '£' )
-   				    }
+                    {  "data": null,
+                                                          "render": function(data, type, row, meta) {
+                                                           var formattedNumber = $.fn.dataTable.render.number(',', '.', 2, '£' ).display(data.defaultSurplusAmount)
 
-				]
-             	 })
+                                                          if (data.defaultSurplusAmount < 0)
+                                                          {  var  ReturnString = '<div class="warning">'+ formattedNumber + ' </div>';}
+                                                          else
+                                                          {  var  ReturnString = '<div >'+ formattedNumber + ' </div>';}
+
+
+                                                          return ReturnString;
+                                                          }},
+                    { "data": null,
+                                                                                "render": function(data, type, row, meta) {
+                                                                                 var formattedNumber = $.fn.dataTable.render.number(',', '.', 2, '£' ).display(data.stress1SurplusAmount)
+
+                                                                                if (data.stress1SurplusAmount < 0)
+                                                                                {  var  ReturnString = '<div class="warning">'+ formattedNumber + ' </div>';}
+                                                                                else
+                                                                                {  var  ReturnString = '<div >'+ formattedNumber + ' </div>';}
+
+
+                                                                                return ReturnString;
+                                                                                }},
+                    { "data": null,
+                                                                                                      "render": function(data, type, row, meta) {
+                                                                                                       var formattedNumber = $.fn.dataTable.render.number(',', '.', 2, '£' ).display(data.stress2SurplusAmount)
+
+                                                                                                      if (data.stress2SurplusAmount < 0)
+                                                                                                      {  var  ReturnString = '<div class="warning">'+ formattedNumber + ' </div>';}
+                                                                                                      else
+                                                                                                      {  var  ReturnString = '<div >'+ formattedNumber + ' </div>';}
+
+
+                                                                                                      return ReturnString;
+                                                                                                      }}
+
+				]}
+             	 )
+
             }
 
 
@@ -633,7 +668,8 @@ $('#btnIncomeAdd').click ( function()
     {
     // Clear the existing data then show the modal
      $('#m_income_record-id').val("");
-     $('#m_incomeType').val(0);
+     //$('#m_incomeType').val(0);
+      $('#m_incomeType').prop('selectedIndex', 0);
      $('#m_incomeDescription').val("");
      $('#m_ApplicantNumber').val(0);
      $('#m_income_stressOutcome').val("");

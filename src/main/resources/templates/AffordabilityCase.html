@@ -69,8 +69,6 @@
 <div class="col-sm-1">.col-sm-1</div>
 <div class="col-sm-10">
     <div class="main-body col-sm-10">
-        <button id="btnCaseAdd" type="button" class="btn btn-outline-primary"><span class="glyphicon glyphicon-plus"></span>
-        </button>
 
         <div class="row">
             <label class="col-sm-2 control-label">Case ID</label>
@@ -116,10 +114,6 @@
             </div>
         </div>
         <br/>
-        <div class="row"></div>
-
-        <div class="row">
-            </div>
 
 
 
@@ -130,19 +124,17 @@
                 <li id="firstTabSelector" class="active" ><a href="#IncomeTab">Income</a></li>
                 <li id="secondTabSelector"><a href="#OutgoingsTab">Outgoings</a></li>
                 <li id="thirdTabSelector"><a href="#ProjectionTab">Projection</a></li>
+                <li id="fourthTabSelector"><a href="#ProjectionTab">Visualisation</a></li>
             </ul>
                 <div class="tab-content">
             <div id="IncomeTab" class="tab active" >
-                Income
-                    <br/>
                     <button id="btnIncomeAdd" type="button" class="btn btn-outline-primary"><span
                             class="glyphicon glyphicon-plus"></span>
                         Add Income
                     </button>
-                    <br/>
                 <br/>
-                    <div class="row"></div>
-                    <table id="IncomeTable" class=" compact table table-striped table-bordered" style="width:100%">
+                <div class="row"></div>
+                    <table id="IncomeTable" class=" compact table table-striped table-bordered" >
                         <!-- Header Table -->
                         <thead>
                         <tr>
@@ -176,16 +168,13 @@
                     </table>
             </div>
             <div id="OutgoingsTab" class="tab">
-                Outgoings
-                    <br/>
                     <button id="btnOutgoingsAdd" type="button" class="btn btn-outline-primary">Add Outgoings <span
                             class="glyphicon glyphicon-plus"></span></button>
                     <button id="btnDefaultOutgoings" type="button" class="btn btn-outline-primary">Add Default Outgoings <span
                             class="glyphicon glyphicon-plus"></span></button>
-                    <br/>
-                    <div class="row"></div>
-                    <br/>
-                    <table id="OutgoingsTable" class=" table compact table-striped table-bordered" style="width:100%">
+                <br/>
+                <div class="row"></div>
+                <table id="OutgoingsTable" class=" table compact table-striped table-bordered" >
                         <!-- Header Table -->
                         <thead>
                         <tr>
@@ -211,20 +200,15 @@
                         </tr>
                         </tfoot>
                     </table>
-
-
-
             </div>
             <div id="ProjectionTab" class="tab">
-                Projection
-                    <br/>
                     <button id="btnCreatProjection" type="button" class="btn btn-outline-primary"><span
                             class="glyphicon glyphicon-plus"></span>
                         Create Projection
                     </button>
                 <br/>
-                    <br/>
-                    <table id="ProjectionTable" class=" compact table table-striped table-bordered" style="width:100%">
+                <div class="row"></div>
+                    <table id="ProjectionTable" class=" compact table table-striped table-bordered" >
                         <!-- Header Table -->
                         <thead>
                         <tr>

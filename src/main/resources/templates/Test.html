@@ -33,7 +33,7 @@
 
     <!-- Custom Libraries  -->
 
-    <script src="/js/Test.js"></script>
+    <script src="/js/AffordabilityCase.js"></script>
     <link rel="stylesheet" type="text/css" href="mystyle.css"/>
 
 
@@ -69,8 +69,6 @@
 <div class="col-sm-1">.col-sm-1</div>
 <div class="col-sm-10">
     <div class="main-body col-sm-10">
-        <button id="btnCaseAdd" type="button" class="btn btn-outline-primary"><span class="glyphicon glyphicon-plus"></span>
-        </button>
 
         <div class="row">
             <label class="col-sm-2 control-label">Case ID</label>
@@ -84,6 +82,7 @@
                 <input type="text" class="form-control" id="m_Case_Description" readonly="true"  value="0"/>
             </div>
         </div>
+
         <div class="row">
             <label class="col-sm-2 control-label"> Number of Applicants</label>
             <div class="col-sm-2">
@@ -91,30 +90,172 @@
             </div>
         </div>
         <div class="row">
-            <label class="col-sm-2 control-label"> From Date</label>
+            <label class="col-sm-2 control-label"> Applicant 1 Name</label>
             <div class="col-sm-2">
-                <input type="text" class="form-control" id="m_CaseFromDate" readonly="true" value="0"/>
+                <input type="text" class="form-control" id="m_Applicant1Name" readonly="true" value="0"/>
             </div>
         </div>
         <div class="row">
-            <label class="col-sm-2 control-label"> To Date</label>
+            <label class="col-sm-2 control-label"> Applicant 2 Name</label>
             <div class="col-sm-2">
-                <input type="text" class="form-control" id="m_CaseToDate" readonly="true" value="0"/>
+                <input type="text" class="form-control" id="m_Applicant2Name" readonly="true" value="0"/>
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-sm-2 control-label"> From Year</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="m_CaseFromYear" readonly="true" value="0"/>
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-sm-2 control-label"> To Year</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="m_CaseToYear" readonly="true" value="0"/>
             </div>
         </div>
         <br/>
         <div class="row"></div>
-        <button id="btnIncome" type="button" class="btn btn-outline-primary">Income <span
-                class="glyphicon glyphicon-plus"></span>
-        </button>
-        <button id="btnOutgoings" type="button" class="btn btn-outline-primary">Outgoings <span
-                class="glyphicon glyphicon-minus"></span>
-        </button>
-        <button id="btnAffordability" type="button" class="btn btn-outline-primary">Projection <span
-                class="glyphicon glyphicon-dashboard"></span>
-        </button>
+
         <div class="row">
+        </div>
+
+
+
+
+
+        <div id="tabs" class="tabs">
+            <ul class="tab-links">
+                <li id="firstTabSelector" class="active" ><a href="#IncomeTab">Income</a></li>
+                <li id="secondTabSelector"><a href="#OutgoingsTab">Outgoings</a></li>
+                <li id="thirdTabSelector"><a href="#ProjectionTab">Projection</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="IncomeTab" class="tab active" >
+                    Income
+                    <br/>
+                    <button id="btnIncomeAdd" type="button" class="btn btn-outline-primary"><span
+                            class="glyphicon glyphicon-plus"></span>
+                        Add Income
+                    </button>
+                    <br/>
+                    <br/>
+                    <div class="row"></div>
+                    <table id="IncomeTable" class=" compact table table-striped table-bordered" style="width:100%">
+                        <!-- Header Table -->
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Applicant Number</th>
+                            <th>Income Type</th>
+                            <th>Income Description</th>
+                            <th>Stress Outcome</th>
+                            <th>Index Linked </th>
+                            <th>From Year</th>
+                            <th>To Year</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <!-- Footer Table -->
+                        <tfoot>
+                        <tr>
+                            <th>Id</th>
+                            <th>Applicant Number</th>
+                            <th>Income Type</th>
+                            <th>Income Description</th>
+                            <th>Stress Outcome</th>
+                            <th>Index Linked </th>
+                            <th>From Year</th>
+                            <th>To Year</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div id="OutgoingsTab" class="tab">
+                    Outgoings
+                    <br/>
+                    <button id="btnOutgoingsAdd" type="button" class="btn btn-outline-primary">Add Outgoings <span
+                            class="glyphicon glyphicon-plus"></span></button>
+                    <button id="btnDefaultOutgoings" type="button" class="btn btn-outline-primary">Add Default Outgoings <span
+                            class="glyphicon glyphicon-plus"></span></button>
+                    <br/>
+                    <div class="row"></div>
+                    <br/>
+                    <table id="OutgoingsTable" class=" table compact table-striped table-bordered" style="width:100%">
+                        <!-- Header Table -->
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Outgoings Type</th>
+                            <th>Outgoings Description</th>
+                            <th>From Year</th>
+                            <th>To Year</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <!-- Footer Table -->
+                        <tfoot>
+                        <tr>
+                            <th>Id</th>
+                            <th>Outgoings Type</th>
+                            <th>Outgoings Description</th>
+                            <th>From Year</th>
+                            <th>To Year</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+
+
+
+                </div>
+                <div id="ProjectionTab" class="tab">
+                    Projection
+                    <br/>
+                    <button id="btnCreatProjection" type="button" class="btn btn-outline-primary"><span
+                            class="glyphicon glyphicon-plus"></span>
+                        Create Projection
+                    </button>
+                    <br/>
+                    <br/>
+                    <table id="ProjectionTable" class=" compact table table-striped table-bordered" style="width:100%">
+                        <!-- Header Table -->
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Year</th>
+                            <th>Default Income </th>
+                            <th>Stress 1 Income </th>
+                            <th>Stress 2 Income </th>
+                            <th>Outgoings  </th>
+                            <th>Default Surplus</th>
+                            <th>Stress 1 Surplus</th>
+                            <th>Stress 2 Surplus</th>
+                        </tr>
+                        </thead>
+                        <!-- Footer Table -->
+                        <tfoot>
+                        <tr>
+                            <th>Id</th>
+                            <th>Year</th>
+                            <th>Default Income </th>
+                            <th>Stress 1 Income </th>
+                            <th>Stress 2 Income </th>
+                            <th>Outgoings</th>
+                            <th>Default Surplus</th>
+                            <th>Stress 1 Surplus</th>
+                            <th>Stress 2 Surplus</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                    <div class="row"></div>
+                </div>
             </div>
+        </div>
 
 
     </div>
@@ -138,11 +279,17 @@
                             <input type="text" class="form-control" id="m_income_record-id" readonly="true" value=""/>
                         </div>
                     </div>
+                    <div class="row">
+                        <label class="col-sm-2 control-label">Applicant Number</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" id="m_ApplicantNumber"></select>
+                        </div>
+                    </div>
 
                     <div class="row">
                         <label class="col-sm-2 control-label">Income Type</label>
                         <div class="col-sm-4">
-                            <select class="form-control" id="m_IncomeType"></select>
+                            <select class="form-control" id="m_incomeType"></select>
                         </div>
                     </div>
                     <div class="row">
@@ -158,15 +305,22 @@
                         </div>
                     </div>
                     <div class="row">
-                        <label class="col-sm-2 control-label"> From Date</label>
+                        <label class="col-sm-2 control-label"> Index Linked</label>
+                        <div class="col-sm-10">
+                            <input type="checkbox" id="m_indexLinked" value="True"/>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label class="col-sm-2 control-label"> From Year</label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" id="m_income_fromDate" value="0"/>
+                            <input type="text" class="form-control" id="m_income_fromYear" value="0"/>
                         </div>
                     </div>
                     <div class="row">
-                        <label class="col-sm-2 control-label"> To Date</label>
+                        <label class="col-sm-2 control-label"> To Year</label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" id="m_income_toDate" value="0"/>
+                            <input type="text" class="form-control" id="m_income_toYear" value="0"/>
                         </div>
                     </div>
                     <div class="row">
@@ -179,7 +333,7 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-info" id="IncomeModalSetDate" >Whole Period</button>
+                    <button type="button" class="btn btn-info" id="IncomeModalSetYear" >Whole Period</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-success" data-dismiss="modal" id="IncomeModalSave">Save
                     </button>
@@ -190,42 +344,6 @@
     </div>
 
     <!-- The Outgoings Section -->
-    <div class="col-sm-10 main-body border border-primary" id="OutgoingsDiv">
-        <br/>
-        <button id="btnOutgoingsAdd" type="button" class="btn btn-outline-primary">Add Outgoings <span
-                class="glyphicon glyphicon-plus"></span></button>
-        <button id="btnDefaultOutgoings" type="button" class="btn btn-outline-primary">Add Default Outgoings <span
-                class="glyphicon glyphicon-plus"></span></button>
-        <br/>
-        <div class="row"></div>
-        <table id="OutgoingsTable" class=" table compact table-striped table-bordered" style="width:100%">
-            <!-- Header Table -->
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Outgoings Type</th>
-                <th>Outgoings Description</th>
-                <th>From Dated</th>
-                <th>To Date</th>
-                <th>Amount</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <!-- Footer Table -->
-            <tfoot>
-            <tr>
-                <th>Id</th>
-                <th>Outgoings Type</th>
-                <th>Outgoings Description</th>
-                <th>From Dated</th>
-                <th>To Date</th>
-                <th>Amount</th>
-                <th>Action</th>
-            </tr>
-            </tfoot>
-        </table>
-        .col-sm-6
-    </div>
 
 
 </div>
@@ -261,15 +379,15 @@
                     </div>
                 </div>
                 <div class="row">
-                    <label class="col-sm-2 control-label"> From Date</label>
+                    <label class="col-sm-2 control-label"> From Year</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="m_OutgoingsfromDate" value="0"/>
+                        <input type="text" class="form-control" id="m_OutgoingsfromYear" value="0"/>
                     </div>
                 </div>
                 <div class="row">
-                    <label class="col-sm-2 control-label"> To Date</label>
+                    <label class="col-sm-2 control-label"> To Year</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="m_OutgoingstoDate" value="0"/>
+                        <input type="text" class="form-control" id="m_OutgoingstoYear" value="0"/>
                     </div>
                 </div>
                 <div class="row">
@@ -282,7 +400,7 @@
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-info" id="OutgoingsModalSetDate" >Whole Period</button>
+                <button type="button" class="btn btn-info" id="OutgoingsModalSetYear" >Whole Period</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-success" data-dismiss="modal" id="OutgoingsModalSave">Save</button>
             </div>
@@ -291,72 +409,6 @@
     </div>
 </div>
 
-<div class="tabs">
-    <ul class="tab-links">
-        <li class="active"><a href="#tab1">Tab #1</a></li>
-        <li><a href="#tab2">Tab #2</a></li>
-        <li><a href="#tab3">Tab #3</a></li>
-        <li><a href="#tab4">Tab #4</a></li>
-    </ul>
 
-    <div class="tab-content">
-        <div id="tab1" class="tab active">
-            <p>Tab #1 content goes here!</p>
-            <p>Donec pulvinar neque sed semper lacinia. Curabitur lacinia ullamcorper nibh; quis imperdiet velit eleifend ac. Donec blandit mauris eget aliquet lacinia! Donec pulvinar massa interdum risus ornare mollis.</p>
-                <br/>
-                <button id="btnIncomeAdd" type="button" class="btn btn-outline-primary"><span
-                        class="glyphicon glyphicon-plus"></span>
-                    Add Income
-                </button>
-                <br/>
-                <div class="row"></div>
-                <table id="IncomeTable" class=" compact table table-striped table-bordered" style="width:100%">
-                    <!-- Header Table -->
-                    <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Income Type</th>
-                        <th>Income Description</th>
-                        <th>Stress Outcome</th>
-                        <th>From Date</th>
-                        <th>To Date</th>
-                        <th>Amount</th>
-                        <th>Action</th>
-
-
-                    </tr>
-                    </thead>
-                    <!-- Footer Table -->
-                    <tfoot>
-                    <tr>
-                        <th>Id</th>
-                        <th>Income Type</th>
-                        <th>Income Description</th>
-                        <th>Stress Outcome</th>
-                        <th>From Date</th>
-                        <th>To Date</th>
-                        <th>Amount</th>
-                        <th>Action</th>
-                    </tr>
-                    </tfoot>
-                </table>
-        </div>
-
-        <div id="tab2" class="tab">
-            <p>Tab #2 content goes here!</p>
-            <p>Donec pulvinar neque sed semper lacinia. Curabitur lacinia ullamcorper nibh; quis imperdiet velit eleifend ac. Donec blandit mauris eget aliquet lacinia! Donec pulvinar massa interdum risus ornare mollis. In hac habitasse platea dictumst. Ut euismod tempus hendrerit. Morbi ut adipiscing nisi. Etiam rutrum sodales gravida! Aliquam tellus orci, iaculis vel.</p>
-        </div>
-
-        <div id="tab3" class="tab">
-            <p>Tab #3 content goes here!</p>
-            <p>Donec pulvinar neque sed semper lacinia. Curabitur lacinia ullamcorper nibh; quis imperdiet velit eleifend ac. Donec blandit mauris eget aliquet lacinia! Donec pulvinar massa interdum ri.</p>
-        </div>
-
-        <div id="tab4" class="tab">
-            <p>Tab #4 content goes here!</p>
-            <p>Donec pulvinar neque sed semper lacinia. Curabitur lacinia ullamcorper nibh; quis imperdiet velit eleifend ac. Donec blandit mauris eget aliquet lacinia! Donec pulvinar massa interdum risus ornare mollis. In hac habitasse platea dictumst. Ut euismod tempus hendrerit. Morbi ut adipiscing nisi. Etiam rutrum sodales gravida! Aliquam tellus orci, iaculis vel.</p>
-        </div>
-    </div>
-</div>
 </body>
 </html>

@@ -108,25 +108,35 @@ public class AffordabilityCaseController {
         System.out.println("CreateProjection called");
         AffordabilityCase CaseRecord = AffordabilityCaseRepository.findOne(_AffordabilityCase.getId());
         if ( CaseRecord != null) {
+            Integer CaseID = _AffordabilityCase.getId();
+            _ProjectionRepository.deleteByAffordabilityCaseID(CaseID);///TODO, OK, its a bit sloppy, should check the record exists before I try to delete it
+
 
             System.out.println("Creating a projection for years"+ CaseRecord.getFromYear() + " to " +CaseRecord.getToYear());
-            InflationList = this.getInflationList(); // Load the Inflation List into memort to improve performance over multiple DB calls
+            InflationList = this.getInflationList(); // Load the Inflation List into memory to improve performance over multiple DB calls
             Integer iteratorYear = CaseRecord.getFromYear();
 
             while (iteratorYear <= CaseRecord.getToYear()) {
                 getInflationBetweenYears(CaseRecord.getFromYear()+1, iteratorYear);
                 Projection CaseProjection = new Projection();
-                Double DefaultIncomeForYear = getDefaultIncomeForYear(_AffordabilityCase.getId(), iteratorYear);
-                Double OutgoingsAmountForYear = getOutgoingsForYear(_AffordabilityCase.getId(), iteratorYear);
+                Double DefaultIncomeForYear = getDefaultIncomeForYear(CaseID, iteratorYear);
+                Double OutgoingsAmountForYear = getOutgoingsForYear(CaseID, iteratorYear);
+                Double Stress1IncomeForYear = getStressIncomeForYear(CaseID,iteratorYear, 1);
+                Double Stress2IncomeForYear = getStressIncomeForYear(CaseID,iteratorYear, 2);
                 Double DefaultSurplusForYear = DefaultIncomeForYear - OutgoingsAmountForYear;
-                System.out.println("Creating projection for year:" + iteratorYear);
+                Double Stress1SurplusforYear = Stress1IncomeForYear - OutgoingsAmountForYear;
+                Double Stress2SurplusforYear = Stress2IncomeForYear - OutgoingsAmountForYear;
+
                 CaseProjection.setProjectionYear(iteratorYear);
-                CaseProjection.setAffordabilityCaseID(_AffordabilityCase.getId());
-                //System.out.println(getDefaultIncomeForYear(_AffordabilityCase.getId(), iteratorYear));
+                CaseProjection.setAffordabilityCaseID(CaseID);
 
                 CaseProjection.setDefaultIncomeAmount(DefaultIncomeForYear);
                 CaseProjection.setOutgoingsAmount(OutgoingsAmountForYear);
                 CaseProjection.setDefaultSurplusAmount(DefaultSurplusForYear);
+                CaseProjection.setStress1IncomeAmount(Stress1IncomeForYear);
+                CaseProjection.setStress2IncomeAmount(Stress2IncomeForYear);
+                CaseProjection.setStress1SurplusAmount(Stress1SurplusforYear);
+                CaseProjection.setStress2SurplusAmount(Stress2SurplusforYear);
                 _ProjectionRepository.save(CaseProjection);
                 iteratorYear++;
             }
@@ -183,10 +193,42 @@ public class AffordabilityCaseController {
                 //TODO add weighting into calculation
 
             }
-       this.getInflationList();
 
         return ReturnAmount;
     }
+
+    private Double getStressIncomeForYear(Integer AffordabilityCaseID, Integer ProjectionYear, Integer ApplicantNumber)
+    {
+        /// Determining income in the event of a stress for applicant #1, so we will adjust the income figure by the stress outcome weighting
+        Iterable <Income> _Income  = _IncomeRepository.findAllByAffordabilityCaseIDandYear(AffordabilityCaseID, ProjectionYear);
+        Iterator<Income>  _IncomeIterator = _Income.iterator();
+        Double ReturnAmount = 0.0;
+        Double StressWeighting = 1.0;
+        while (_IncomeIterator.hasNext())
+        {
+            Income IncomeRecord = _IncomeIterator.next();
+            System.out.println("Iterating Income Set");
+            if (IncomeRecord.getApplicantNumber()== ApplicantNumber)
+            { StressWeighting = IncomeRecord.getStressOutcome()/100.0;}
+            else
+            {StressWeighting = 1.0;}
+            ///stress weighting is stored as an integer, so we will convert it to a %
+
+
+            if (IncomeRecord.getIndexLinked()==true)
+            {
+                ReturnAmount = ReturnAmount + ((IncomeRecord.getAmount()* getInflationBetweenYears(IncomeRecord.getFromYear()+1, ProjectionYear))* StressWeighting);
+            }
+            else
+            {ReturnAmount = ReturnAmount + IncomeRecord.getAmount() * StressWeighting; }
+
+            //TODO add weighting into calculation
+
+        }
+
+        return ReturnAmount ;
+    }
+
     private Double getOutgoingsForYear(Integer AffordabilityCaseID, Integer ProjectionYear)
     {
         Iterable <Outgoings> _Outgoings  = _OutgoingsRepository.findAllByAffordabilityCaseIDandYear(AffordabilityCaseID, ProjectionYear);
@@ -203,35 +245,7 @@ public class AffordabilityCaseController {
 
         return ReturnAmount;
     }
-    private Double OldgetInflationBetweenYears(Integer  StartYear, Integer EndYear)
-    {
-        Integer YearIterator = StartYear;
-        Double YearAmount = 0.0;
-        Double TotalAmount = 1.0;
-        while (YearIterator <= EndYear )
-        {
-            ////////////////////////////////////////////////////////
-            Iterable <Inflation> _Inflation  = _InflationRepository.findAllByInflationYear( YearIterator);
-            Iterator<Inflation>  _InflationIterator = _Inflation.iterator();
-            YearAmount = 0.0;
-            while (_InflationIterator.hasNext())
-            {
-                Inflation InflationRecord = _InflationIterator.next();
-                YearAmount = YearAmount + InflationRecord.getinflation();
-                //TODO - this will return the wrong value in the event of duplicate records (need to set constraints on table)
 
-            }
-            //System.out.println("Year: "+ YearIterator + " YearAmount: " + YearAmount);
-
-            TotalAmount = TotalAmount+ ((YearAmount/100) * TotalAmount);
-            ///////////////////////////////////////////////////////
-            YearIterator++;
-        }
-
-        System.out.println("Total Inflation Between Years"+ StartYear + " - " + EndYear + "=" + TotalAmount);
-
-        return TotalAmount;
-    }
 
     private Double getInflationforYear (int targetYear)
     {

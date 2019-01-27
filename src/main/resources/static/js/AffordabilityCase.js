@@ -502,16 +502,17 @@ $(document).ready( function () {
  $("#IncomeModal").modal('hide');
  $("#OutgoingsModal").modal('hide');
 SetFormatOptions();
-$("#tabs").tabs();
+//$("#tabs").tabs();
 
-function selectTab(tabName) {
-    $("#tabs").tabs("option", "active", $(tabName + "Selector").index());
-}
-
-selectTab("#secondTab");
-
-setTimeout(function() {selectTab("#firstTab");}, 500);
-
+jQuery('.tabs .tab-links a').on('click', function(e) {
+		var currentAttrValue = jQuery(this).attr('href');
+		// Show/Hide Tabs
+		jQuery('.tabs ' + currentAttrValue).show().siblings().hide();
+		// Change/remove current tab to active
+		jQuery(this).parent('li').addClass('active').siblings().removeClass('active');
+        jQuery('.tabs ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
+		e.preventDefault();
+	});
 
 var affordability_record_id =  sessionStorage.getItem('affordability_record_id');
 

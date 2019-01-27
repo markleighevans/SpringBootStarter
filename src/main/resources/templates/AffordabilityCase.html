@@ -120,13 +120,19 @@
 
         <div class="row">
             </div>
-        <div id="tabs">
-            <ul class="tabs">
-                <li id="firstTabSelector"><a href="#IncomeTab">Income</a></li>
+
+
+
+
+
+            <div id="tabs" class="tabs">
+            <ul class="tab-links">
+                <li id="firstTabSelector" class="active" ><a href="#IncomeTab">Income</a></li>
                 <li id="secondTabSelector"><a href="#OutgoingsTab">Outgoings</a></li>
                 <li id="thirdTabSelector"><a href="#ProjectionTab">Projection</a></li>
             </ul>
-            <div id="IncomeTab">
+                <div class="tab-content">
+            <div id="IncomeTab" class="tab active" >
                 Income
                     <br/>
                     <button id="btnIncomeAdd" type="button" class="btn btn-outline-primary"><span
@@ -169,7 +175,7 @@
                         </tfoot>
                     </table>
             </div>
-            <div id="OutgoingsTab">
+            <div id="OutgoingsTab" class="tab">
                 Outgoings
                     <br/>
                     <button id="btnOutgoingsAdd" type="button" class="btn btn-outline-primary">Add Outgoings <span
@@ -209,7 +215,7 @@
 
 
             </div>
-            <div id="ProjectionTab">
+            <div id="ProjectionTab" class="tab">
                 Projection
                     <br/>
                     <button id="btnCreatProjection" type="button" class="btn btn-outline-primary"><span
@@ -250,6 +256,7 @@
                     </table>
                     <div class="row"></div>
             </div>
+                </div>
         </div>
 
 
